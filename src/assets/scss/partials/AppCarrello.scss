@@ -1,0 +1,20 @@
+@import "./variables.scss";
+
+.add-btn{
+    border-style: none;
+    background-color: $secondary;
+    padding: 10px;
+    border-radius: 20px;
+}
+.remove-btn{
+    border-style: none;
+    background-color: black;
+}
+.payment-btn{
+    background-color: $secondary;
+    color: $primary;
+}
+.payment-btn:hover{
+    background-color: $primary;
+    color: $secondary;
+}

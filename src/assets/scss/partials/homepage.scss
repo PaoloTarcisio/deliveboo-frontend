@@ -1,0 +1,204 @@
+@import "./variables.scss";
+
+h1{
+    color: $secondary;
+}
+
+
+// SECTION HERO
+
+
+.background-header{
+    background: url('/src/assets/img/cheeseburger.jpg') no-repeat center;
+    background-size: cover;
+    width: 100%;
+    background-color: $tertiary;
+}
+
+.background-header::before {
+    background-color: rgba(0, 0, 0, 0.6);
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.background-header .container {
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+}
+.background-header h1{
+    font-size: 1.5em;
+    color: $secondary;
+}
+.background-header h2{
+    font-size: 1.2em;
+    color: $secondary;
+}
+//STILE SEZIONE MAPS//
+/*
+h6{
+    text-transform: uppercase;
+}
+.section-map{
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    padding: 4em 0;  
+    background-color: $secondary; 
+}
+.container-section-map{
+    height: 800px;
+}
+.map-wrapper{
+    height: 500px;
+}
+.map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    filter: invert(1) grayscale(100%);
+}
+.main-content{
+    z-index: 22;
+    width: fit-content;
+    color: $primary;
+}
+@media (max-width:600px) {
+    .map-wrapper iframe {
+        min-height: 140vh;
+    }
+
+}
+.download-map-menu > .btn {
+    background-color: $primary;
+    color: $secondary;
+    font-weight: bold;
+}
+.download-map-menu > .btn:hover{
+    background-color: $secondary;
+    color: $primary;
+    border-color: $primary;
+}
+*/
+
+//CATEGORIE
+
+.categories-container {
+    background-color: #D2BC9D;
+}
+.categories-container > .container > h1 {
+    margin-top: 100px;
+    margin-bottom: 70px;
+}
+.btn-categories {
+    background-color: $primary;
+    color: $secondary;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.btn-categories:hover {
+    background-color: $secondary;
+    color: $primary;
+}
+
+
+
+
+//CAROSELLO
+
+
+.background-card-carousel{
+    background-color: $tertiary;
+    border: none;
+}
+.background-card-carousel > .card-body > .btn{
+    background-color: $secondary;
+    font-weight: bold;
+}
+.background-card-carousel > .card-body > .btn:hover{
+    background-color: $tertiary;
+    color: $primary;
+}
+.carousel {
+    background-color: $primary;
+    margin-top: 100px;
+}
+.carousel-item{
+    background-color: $secondary;
+}
+.carousel-item > * {
+    color: $secondary;
+}
+.img-wrapper{
+    max-width: 100%;
+    height: 65vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 30px;
+    overflow: hidden;
+}
+.img-wrapper > img{
+    border-radius: 30px;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.background-card-body{
+    border-radius: 30px;
+    padding: 50px;
+}
+@media screen and (min-width:576px){
+    .carousel-inner {
+        display: flex;
+        background-color: $tertiary;
+    }
+    .carousel-item {
+        display: block;
+        margin-right: 0;
+        flex: 0 0 calc(100/3);
+        background-color: $tertiary;
+    }
+    .img-wrapper{
+        height: 23vw;
+        background-color: $tertiary;
+    }
+}
+.carousel-inner{
+    padding: 1em;
+}
+.card {
+    margin: 0.5em;
+}
+.card-map{
+    background-color: $secondary;
+    color: $primary;
+}
+.card > .img-wrapper, .card-body {
+    background-color: $primary;
+}
+.carousel-control-prev > *{
+    background-color: $tertiary;
+    border-radius: 50px;
+}
+.carousel-control-next > *{
+    background-color: $tertiary;
+    border-radius: 50px;
+}
+.custom-icon {
+    color: $primary;
+    font-size: 30px;
+    padding: 10px;
+}
+.carousel-item:last-child{
+    text-align: start;
+}
+.carousel-item:first-child{
+    text-align: end;
+}

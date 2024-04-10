@@ -1,0 +1,88 @@
+@import "./variables.scss";
+
+
+.container-menu:first-child{
+    margin-top: 150px;
+}
+img {
+    width: 200px;
+    height: 200px;
+    box-shadow: 5px 5px 5px;
+}
+h4, h5, h6 {
+    text-shadow: 1px 1px 1px white;
+}
+h2{
+    font-weight: bold;
+}
+.card-specific {
+    width: 100px;
+}
+.card-specific > *{
+    margin-top: 10px;
+}
+.card-specific > button {
+    background-color: $secondary;
+    color: $primary;
+}
+.card-specific > button:hover {
+    background-color: $primary;
+    color: $secondary;
+    border-color: $secondary;
+}
+.info-risto{
+    margin-bottom: 70px;
+}
+.info-risto > .col-4 > img{
+    width: 300px;
+    height: 300px;
+}
+.info-risto > .col-8 > *{
+    margin-bottom: 10px;
+}
+.btn-info-restaurant{
+    background-color: $primary;
+    color: $secondary;
+}
+@media (max-width: 992px) {
+    .btn-info-restaurant{
+        display: none;
+    }
+}
+@media (min-width: 993px) {
+    .btn-info-restaurant-second {
+        display: none;
+        margin-left: 100px;
+        background-color: $tertiary;
+    }
+}
+.badge {
+    background-color: black;
+}
+.col-9 > .btn {
+    margin-top: 10px;
+}
+
+.mini-carrello {
+    position: absolute;
+    right: 80px;
+    top: 150px;
+}
+.navbar-menu > .col-1 > .btn{
+    background-color: $primary;
+}
+.navbar-menu > .col-1 > .btn > a{
+    color: $secondary;
+    text-decoration: none;
+}
+.food-img-container > img:hover {
+    transform: rotate(360deg);
+    transition: 2s;
+    transition-timing-function: ease;
+}
+
+/*
+    TRANSITION PAGE ?
+    SE NON LA FAI RICORDA DI CANCELLARE LE CLASSI
+*/
+//premi bottone per scorrere i paitti
