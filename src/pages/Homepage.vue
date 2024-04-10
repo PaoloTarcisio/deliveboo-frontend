@@ -44,6 +44,7 @@ export default {
             .get('http://127.0.0.1:8000/api/types')
             .then(response => {
                 this.types = response.data.results;
+                console.log(this.types);
             });
     }
 };
