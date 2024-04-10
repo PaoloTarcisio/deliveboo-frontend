@@ -12,6 +12,13 @@ export default {
     methods: {
         clearMessage() {
             this.paymentSuccess = false;
+        },
+        getRestaurantsByType(typeId){
+            axios
+                .get('http://127.0.0.1:8000/api/restaurants/types/' + typeId)
+                .then(response => {
+                    this.restaurants = response.data.results;
+                });
         }
     },
     mounted() {
@@ -63,9 +70,9 @@ export default {
                 <h1 class="text-center text-black">Guarda i ristoranti in base ai tuoi gusti!</h1>
                 <div class="row">
                     <div class="col-2 pt-4" v-for="type in types">
-                        <router-link :to="{ name: 'getRestaurantByType', params: { id: type.id } }" class="type-button">
+                        <button class="types" @click="getRestaurantsByType(type.id)">
                             {{ type.name }}
-                        </router-link>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -112,7 +119,7 @@ export default {
 
     .categories-container
     {
-        a
+        .types
         {
             text-decoration: none;
             font-weight: 500;
@@ -123,7 +130,7 @@ export default {
             color: $primary;
         }
 
-        a:hover
+        .types:hover
         {
             color: $tertiary;
             border: 2px solid $primary;
