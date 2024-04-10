@@ -50,7 +50,7 @@ data() {
               <div class="my-5">
                 <div class="container-list-group">
                   <ul id="plates-list" class="plates-list">
-                      <button @click="add(); AumentaNumeroPiatti()" class="add-btn px-3">
+                      <button class="add-btn px-3">
                           Aggiungi +
                       </button>
                   </ul>

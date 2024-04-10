@@ -1,13 +1,30 @@
 <script>
+import axios from 'axios';
+
+
 export default {
-    
+    data() {
+    return {
+        restaurant: null,
+        };
+    },
+    created () {
+        axios
+            .get('http://127.0.0.1:8000/api/restaurants/' + this.$route.params.id)
+            .then(response => {
+                this.restaurant = response.data.results;
+                this.plates = response.data.results.plates;
+                console.log(this.restaurant);
+                // console.log(this.plates);
+            });
+    }
 }
 </script>
 
 <template>
     <div class="container pt-4 pb-4">
         <div class="container-menu">
-            
+
             <!--INFORMAZIONI RISTORANTE-->
             <div class="row info-risto first-page">
                 <div class="col-4">
@@ -50,7 +67,7 @@ export default {
                     </button>
                 </div>
             </div>
-
+            
             <!--navbar-->
 
             <div class="row navbar-menu second-page">
@@ -110,7 +127,7 @@ export default {
                     </button>
                 </div>
 
-                
+
 
             </div>
 
@@ -120,8 +137,9 @@ export default {
             <h3 class="my-5 text-center">
                 I nostri Primi piatti
             </h3>
-            <p class="my-5 text-center" style="font-size: 70px;">
-                io scorrerò finiti i primi e passerò ai secondi, ai contorni....
+            <p class="my-5 text-center" v-for="plate in restaurant.plates">
+                {{ plate.name }}
+
             </p>
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-1 text-center">
@@ -131,21 +149,18 @@ export default {
                                 <img src="../src/assets/img/margherita-pizza.jpg" style="width: 600px;  height: 400px;" class="rounded-start" alt="...">
                             </div>
                             <div class="col-md-8">
-                                <div class="card-body bg-white">
-                                    <h5 class="card-title">Primo piatto</h5>
-                                    <p class="card-text text-black">Primo piatto1, primo piatto 2. Finiti, scorre sui secondi, ecc. ecc.</p>
-                                </div>
+
                             </div>
-                        </div>  
+                        </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
             <!--fine row-->
         </div>
     </div>
-    
+
 </template>
 
 <style lang="scss" scoped>
