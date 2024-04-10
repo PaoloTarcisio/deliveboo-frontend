@@ -5,7 +5,6 @@ import Carrello from './pages/Carrello.vue';
 import Menu from './pages/Menu.vue';
 import NotFound from './pages/NotFound.vue';
 import Checkout from './pages/Checkout.vue';
-import TypeRestourant from './pages/TypeRestourant.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -31,12 +30,6 @@ const router = createRouter({
             path: '/checkout',
             name: 'Checkout',
             component: Checkout
-        },
-
-        {
-            path: '/restaurants/types/:id',
-            name: 'getRestaurantByType',
-            component: TypeRestourant
         },
 
         // NOT FOUND PAGE LINK

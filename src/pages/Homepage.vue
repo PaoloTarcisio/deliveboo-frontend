@@ -7,11 +7,20 @@ export default {
             paymentSuccess: this.$route.query.payment === 'success',
             restaurants:[],
             types:[],
+            restaurantsTypes: [],
         };
     },
     methods: {
         clearMessage() {
             this.paymentSuccess = false;
+        },
+        getRestaurantByType(typeId){
+            axios
+                .get('http://127.0.0.1:8000/api/restaurants/types/' + typeId)
+                .then(response => {
+                    this.restaurants = response.data.results;
+                });
+            
         }
     },
     mounted() {
@@ -22,18 +31,19 @@ export default {
         }
     },
     created () {
+
+        // Tutti i ristoranti
         axios
             .get('http://127.0.0.1:8000/api/restaurants')
             .then(response => {
                 this.restaurants = response.data.results.data;
-                console.log(this.restaurants);
             });
 
-            axios
+        // Tutti i tipi
+        axios
             .get('http://127.0.0.1:8000/api/types')
             .then(response => {
                 this.types = response.data.results;
-                console.log(this.types);
             });
     }
 };
@@ -63,9 +73,9 @@ export default {
                 <h1 class="text-center text-black">Guarda i ristoranti in base ai tuoi gusti!</h1>
                 <div class="row">
                     <div class="col-2 pt-4" v-for="type in types">
-                        <router-link :to="{ name: 'getRestaurantByType', params: { id: type.id } }" class="type-button">
+                        <button class="types" @click="getRestaurantByType(type.id)">
                             {{ type.name }}
-                        </router-link>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -74,25 +84,24 @@ export default {
 
     <section class="cards">
         <div class="row p-4">
-            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="(restaurant, i) in restaurants">
-                <a :href="/restaurants/ + restaurants[i].id" @click="navigateToSingleRestaurant(id)">
-                    <div class="card-img" :id="this.restaurants[i].id">
-                        <img :src="this.restaurants[i].image" alt="img ristorante">
+            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in restaurants">
+                <a :href="'/restaurants/' + restaurant.id" @click="navigateToSingleRestaurant(id)">
+                    <div class="card-img" :id="restaurant.id">
+                        <img :src="restaurant.image" alt="img ristorante">
                     </div>
                     <div class="my-card-body">
                         <div class="my-card-title p-2">
-                            <h5>{{ this.restaurants[i].activity_name }}</h5>
+                            <h5>{{ restaurant.activity_name }}</h5>
                         </div>
                         <div class="my-card-description p-3">
-                            <p>{{ this.restaurants[i].description }}</p>
+                            <p>{{ restaurant.description }}</p>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
     </section>
-
-       <!--Fine Card-->
+    <!--Fine Card-->
 </template>
 
 <style lang="scss" scoped>
@@ -112,7 +121,7 @@ export default {
 
     .categories-container
     {
-        a
+        .types
         {
             text-decoration: none;
             font-weight: 500;
@@ -123,7 +132,7 @@ export default {
             color: $primary;
         }
 
-        a:hover
+        .types:hover
         {
             color: $tertiary;
             border: 2px solid $primary;
