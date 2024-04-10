@@ -5,7 +5,7 @@ import axios from 'axios';
 export default {
     data() {
     return {
-        restaurant: null,
+        restaurant: 0,
         };
     },
     created () {

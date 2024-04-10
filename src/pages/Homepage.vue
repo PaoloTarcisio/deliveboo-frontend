@@ -7,19 +7,46 @@ export default {
             paymentSuccess: this.$route.query.payment === 'success',
             restaurants:[],
             types:[],
+            currentPage: 1,
+            lastPage: 1,
         };
     },
     methods: {
         clearMessage() {
             this.paymentSuccess = false;
         },
-        getRestaurantsByType(typeId){
+        getRestaurantsByType(id, page){
             axios
-                .get('http://127.0.0.1:8000/api/restaurants/types/' + typeId)
+                .get('http://127.0.0.1:8000/api/restaurants/types/' + id)
                 .then(response => {
-                    this.restaurants = response.data.results;
+                    this.restaurants = response.data.results.data;
+                    this.currentPage = response.data.results.current_page
+                    this.lastPage = response.data.results.last_page
                 });
-        }
+        },
+        getRestaurants(page){
+            axios
+                .get('http://127.0.0.1:8000/api/restaurants', {
+                    params: {
+                        page: page
+                    }
+                })
+                .then(response => {
+                    this.restaurants = response.data.results.data;
+                    this.currentPage = response.data.results.current_page
+                    this.lastPage = response.data.results.last_page
+                });
+        },
+        nextPage(){
+            if (this.currentPage < this.lastPage) {
+                this.getRestaurants(this.currentPage + 1);
+            }
+        },
+        prevPage(){
+            if (this.currentPage > 1) {
+                this.getRestaurants(this.currentPage - 1);
+            }
+        },
     },
     mounted() {
         if (this.paymentSuccess) {
@@ -29,14 +56,9 @@ export default {
         }
     },
     created () {
-        axios
-            .get('http://127.0.0.1:8000/api/restaurants')
-            .then(response => {
-                this.restaurants = response.data.results.data;
-                // console.log(this.restaurants);
-            });
+        this.getRestaurants(this.currentPage);
 
-            axios
+        axios
             .get('http://127.0.0.1:8000/api/types')
             .then(response => {
                 this.types = response.data.results;
@@ -70,7 +92,7 @@ export default {
                 <h1 class="text-center text-black">Guarda i ristoranti in base ai tuoi gusti!</h1>
                 <div class="row">
                     <div class="col-2 pt-4" v-for="type in types">
-                        <button class="types" @click="getRestaurantsByType(type.id)">
+                        <button class="types" @click="getRestaurantsByType(type.id, currentPage)">
                             {{ type.name }}
                         </button>
                     </div>
@@ -81,21 +103,27 @@ export default {
 
     <section class="cards">
         <div class="row p-4">
-            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="(restaurant, i) in restaurants">
-                <a :href="/restaurants/ + restaurants[i].id" @click="navigateToSingleRestaurant(id)">
-                    <div class="card-img" :id="this.restaurants[i].id">
-                        <img :src="this.restaurants[i].image" alt="img ristorante">
+            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in restaurants">
+                <router-link class="btn btn-primary" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
+                    <div class="card-img">
+                        <img :src="restaurant.image" alt="restaurant.activity_name">
                     </div>
+
                     <div class="my-card-body">
                         <div class="my-card-title p-2">
-                            <h5>{{ this.restaurants[i].activity_name }}</h5>
+                            <h5>{{ restaurant.activity_name }}</h5>
                         </div>
                         <div class="my-card-description p-3">
-                            <p>{{ this.restaurants[i].description }}</p>
+                            <p>{{ restaurant.description }}</p>
                         </div>
                     </div>
-                </a>
+                </router-link>
             </div>
+        </div>
+
+        <div class="container box-buttons d-flex justify-content-around">
+            <button @click="prevPage()" class="btn btn-primary" type="submit">Indetro</button>
+            <button @click="nextPage()" class="btn btn-primary" type="submit">Avanti</button>
         </div>
     </section>
 
