@@ -128,8 +128,14 @@ export default {
                 <h1 class="text-center text-black">Guarda i ristoranti in base ai tuoi gusti!</h1>
                 <div class="row">
                     <div class="col-2 pt-4" v-for="type in types">
-                        <button class="types" @click="selectType(type.id)">
-                            {{ type.name }}
+                        <button type="button" @click="selectType(type.id)" class="types d-flex flex-column align-items-center justify-content-center" :class="selectedType == type.id ? 'active' : ''">
+                            <div style="width: 60%; min-width: 50px;">
+                                <img class="w-100" :src="type.icon" alt="#">
+                            </div>
+                            
+                            <div>
+                                {{ type.name }}
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -157,9 +163,14 @@ export default {
             </div>
         </div>
 
-        <div class="container box-buttons d-flex justify-content-around">
-            <button @click="prevPage()" class="btn btn-primary" type="submit">Indietro</button>
-            <button @click="nextPage()" class="btn btn-primary" type="submit">Avanti</button>
+        <div class="container box-buttons d-flex justify-content-around py-4">
+            <button @click="prevPage()" class="btn btn-primary rounded-5 fs-4 px-4" type="submit">
+                <i class="fa-solid fa-angle-left"></i>
+            </button>
+
+            <button @click="nextPage()" class="btn btn-primary rounded-5 fs-4 px-4" type="submit">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
         </div>
     </section>
 
@@ -199,6 +210,11 @@ export default {
             color: $tertiary;
             border: 2px solid $primary;
             background-color: $primary;
+        }
+
+        .active{
+            background-color: $primary;
+            color: white;
         }
     }
 
