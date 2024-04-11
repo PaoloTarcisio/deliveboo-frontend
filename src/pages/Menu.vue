@@ -2,28 +2,26 @@
 import axios from 'axios';
 import { store } from '../components/store';
 
-
 export default {
     data() {
     return {
+        piatto: [],
+        costo : [],
         store,
         restaurant: [],
-        // platesNames: [],
-        // platesPrice: [],
         };
     },
     methods: {
         AddToChart(name, price) {
-            // this.platesNames.push(name);
-            // this.platesPrice.push(price);
 
-            this.store.platesNames.push(name);
-            this.store.platesPrice.push(price);
+            this.piatto.push(name);
+            this.costo.push(price);
 
-            // console.log(this.platesNames);
-            // console.log(this.platesPrice);
-            console.log(this.store.platesNames);
-            console.log(this.store.platesPrice);
+            localStorage.setItem('piatto', JSON.stringify(this.piatto));
+            localStorage.setItem('costo', JSON.stringify(this.costo));
+
+            console.log(this.piatto);
+            console.log(this.costo);
         }
     },
     created () {
