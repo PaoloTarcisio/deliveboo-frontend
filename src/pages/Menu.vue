@@ -1,12 +1,30 @@
 <script>
 import axios from 'axios';
+import { store } from '../components/store';
 
 
 export default {
     data() {
     return {
+        store,
         restaurant: [],
+        // platesNames: [],
+        // platesPrice: [],
         };
+    },
+    methods: {
+        AddToChart(name, price) {
+            // this.platesNames.push(name);
+            // this.platesPrice.push(price);
+
+            this.store.platesNames.push(name);
+            this.store.platesPrice.push(price);
+
+            // console.log(this.platesNames);
+            // console.log(this.platesPrice);
+            console.log(this.store.platesNames);
+            console.log(this.store.platesPrice);
+        }
     },
     created () {
         axios
@@ -14,7 +32,7 @@ export default {
             .then(response => {
                 this.restaurant = response.data.results;
                 this.plates = response.data.results.plates;
-                console.log(this.restaurant);
+                // console.log(this.restaurant);
                 // console.log(this.plates);
             });
     }
@@ -60,36 +78,9 @@ export default {
             <h2 class="my-4 text-center">
                 Il nostro menù:
             </h2>
-            <div class="row card-plate-row my-3">
-                <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3"  v-for="plate in restaurant.plates">
-                    <div class="img-card-plate m-3">
-                        <img :src="plate.image" alt="" class="info-restaurant">
-                    </div>
-                    <div class="card-plate-name">
-                        <h5 class="text-center">
-                            {{ plate.name }}
-                        </h5>
-                    </div>
-                    <div class="card-plate-price">
-                        <h6>
-                            {{ plate.price }} €
-                        </h6>
-                    </div>
-                    <div class="card-plate-description">
-                        {{ plate.description }}
-                    </div>
-                    <div class="card-plate-ingredients">
-                        Ingredienti:
-                        {{ plate.ingredients }}
-                    </div>
-                </div>
-            </div>
-
-
-
 
             <!-- MENU RISTORANTE 2 -->
-            <!--<div class="row card-plate-row my-3">
+            <div class="row card-plate-row my-3">
                 <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3 px-5 py-3"  v-for="plate in restaurant.plates">
                     <div class="img-card-plate m-3">
                         <img :src="plate.image" alt="" class="info-restaurant">
@@ -120,13 +111,16 @@ export default {
                                     Ingredienti:
                                 </span>
                                 {{ plate.ingredients }}
+                            </div>
                         </div>
                     </div>
 
-
+                    <div class="card-plate-add" @click="AddToChart(plate.name, plate.price)">
+                        <i class="fa-solid fa-cart-plus"></i>
                     </div>
+
                 </div>
-            </div>-->
+            </div>
         </section>
     </div>
 
@@ -170,52 +164,16 @@ export default {
         }
     }
 
+
+
+    // STILE CARD MENU 
+
     .section-menu
     {
         text-align: center;
 
 
-        // STILE MENU 1
         .card-plate-row
-        {
-            width: 90%;
-            margin: 0 auto;
-            justify-content: space-evenly;
-            .card-plate
-            {
-                background-color: $primary;
-                color: $secondary;
-                border-radius: 30px;
-                
-                
-                .img-card-plate{
-        
-                    
-                    img
-                    {
-                        width: 70%;
-                        border-radius: 130px;
-                        box-shadow: 3px 3px 10px;
-                    }
-                }
-
-            
-                .card-plate-ingredients{
-                    margin-top: 1rem;
-                    margin-bottom: 1rem;
-                    padding: 1rem;
-                    background-color: $secondary;
-                    color: $primary;
-                    border: 1px solid $secondary;
-                    border-radius: 20px;
-                }
-            }
-        }
-
-
-
-        //STILE MENU 2
-        /*.card-plate-row
         {
             flex-direction: column;
             align-content: center;
@@ -280,8 +238,19 @@ export default {
                     }
                 }
 
+
+                .card-plate-add
+                {
+                    padding: 1rem;
+                    align-self: flex-end;
+                    border: 2px solid $secondary;
+                    border-radius: 2rem;
+                    color: $secondary;
+
+                }
+
             }
-        }*/
+        }
     }
 }
 
