@@ -7,7 +7,8 @@ export default {
   data() {
     return {
         piattoArray: JSON.parse(localStorage.getItem('piatto')) || [],
-        costoArray: []
+        costoArray: [],
+        piattiConteggio: {}
      };
   },
   methods: {
@@ -30,8 +31,16 @@ export default {
     }
   },
   
+  
   created() {
     this.costoArray = this.convertiStringheInNumeri(JSON.parse(localStorage.getItem('costo')) || []);
+    this.piattoArray.forEach((piatto) => {
+      if (this.piattiConteggio[piatto]) {
+        this.piattiConteggio[piatto]++;
+      } else {
+        this.piattiConteggio[piatto] = 1;
+      }
+    });
   }
   /*
   methods: {
@@ -146,8 +155,12 @@ export default {
                     <!--RIEPILOGO PIATTI E SOMMA-->
                     <div class="container-list-group row">
                         <ul id="plates-list" class="plates-list col-8">
-                            <li v-for="piatto in piattoArray" class="text-primary">
+                            <li v-for="(count, piatto) in piattiConteggio" class="text-primary">
                                 {{ piatto }}
+                                <span v-if="count > 1" class="bg-secondary text-center mb-3 p-2" style="border-radius: 40px;
+                                                                                                        font-weight: bold;">
+                                    {{ count }}
+                                </span>
                             </li>
                         </ul>
                         <ul id="plates-list" class="plates-list col-4">
@@ -161,7 +174,7 @@ export default {
                                     <span class="bg-secondary text-center p-1" style="border-radius: 40px;">
                                         {{ sommaNumeri(costoArray) }}
                                     </span>
-                                </div>
+                            </div>
                         </ul>
                     </div>
                 </div>

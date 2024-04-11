@@ -1,11 +1,12 @@
 <script>
 import axios from "axios";
 
-
 export default {
 
 data() {
   return {
+      piattoArray: JSON.parse(localStorage.getItem('piatto')) || [],
+      costoArray: JSON.parse(localStorage.getItem('costo')) || [],
         piatti: [{
             nome: "Carbonara",
             descrizione: "Pasta con le uova e guanciale, e pepe nero",
@@ -20,6 +21,7 @@ data() {
         piattiAggiunti: [],
         totale: 0
       };
+
     },
     methods: {
       addToCart(piatto) {
@@ -63,7 +65,9 @@ data() {
                                           background-position: center;
                                           background-repeat: no-repeat;"> 
                 
+                <!---->
                 <div class="container-list-group">
+                  {{ piatto }}
                   <ul class="plates-list p-0">
                       <li v-for="(piatto, i) in piatti" :key="i" class="card">
                           <div class="card-body">
@@ -145,11 +149,9 @@ data() {
                   </div>
                 </div>
         </div>
-        <!--FINE CORPO CARRELLO-->
 
 
     </div>
-    <!--END FLOATING BUTTON-->
 </template>
 
 <style lang="scss" scoped>
