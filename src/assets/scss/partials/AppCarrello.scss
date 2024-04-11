@@ -2,13 +2,17 @@
 
 .add-btn{
     border-style: none;
-    background-color: $secondary;
-    padding: 10px;
+    background-color: rgb(7, 235, 7);
+    padding: 5px;
     border-radius: 20px;
 }
 .remove-btn{
     border-style: none;
-    background-color: black;
+    background-color: rgb(195, 30, 30);
+    color: white;
+    padding: 5px;
+    border-radius: 20px;
+    margin-right: 20px;
 }
 .payment-btn{
     background-color: $secondary;
@@ -21,4 +25,11 @@
 .card-body{
     padding: 30px;
     font-size: small;
+}
+.offcanvas-body {
+    padding: 0px;
+}
+.tot-pay{
+    font-size: medium;
+    font-weight: bold;
 }
