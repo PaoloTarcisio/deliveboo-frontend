@@ -44,16 +44,10 @@ export default {
         },
         getRestaurants(page){
             axios
-                .get('http://127.0.0.1:8000/api/restaurants', {
-                    params: {
-                        page: page
-                    }
-                })
+                .get('http://127.0.0.1:8000/api/restaurants')
                 .then(response => {
-                    this.restaurants = response.data.results.data;
-                    this.currentPage = response.data.results.current_page
-                    this.lastPage = response.data.results.last_page
-                    console.log(response.data);
+                    this.restaurants = response.data.results;
+                    // console.log(this.restaurants);
                 });
         },
         /*
@@ -71,17 +65,6 @@ export default {
             }
         },
         */
-        nextPage() {
-            if (this.currentPage < this.lastPage) {
-                this.getRestaurants(this.currentPage + 1);
-            }
-        },
-
-        prevPage() {
-            if (this.currentPage > 1) {
-                this.getRestaurants(this.currentPage - 1);
-            }
-        },
     },
     mounted() {
         if (this.paymentSuccess) {
@@ -171,7 +154,7 @@ export default {
     </div>
 
     <section class="cards">
-        <div class="row p-4">
+        <div class="row p-4" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
             <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in filteredRestaurants">
                 <router-link class="btn btn-primary" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
                     <div class="card-img">
@@ -188,16 +171,6 @@ export default {
                     </div>
                 </router-link>
             </div>
-        </div>
-
-        <div class="container box-buttons d-flex justify-content-around py-4">
-            <button @click="prevPage()" class="btn btn-primary rounded-5 fs-4 px-4" type="submit">
-                <i class="fa-solid fa-angle-left"></i>
-            </button>
-
-            <button @click="nextPage()" class="btn btn-primary rounded-5 fs-4 px-4" type="submit">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
         </div>
     </section>
 
