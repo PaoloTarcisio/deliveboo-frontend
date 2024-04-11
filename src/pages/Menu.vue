@@ -7,12 +7,14 @@ export default {
     return {
         piatto: [],
         costo : [],
+        piatto: [],
+        costo : [],
         store,
         restaurant: [],
         };
     },
     methods: {
-        AddToChart(name, price) {
+        AddToCart(name, price) {
 
             this.piatto.push(name);
             this.costo.push(price);
@@ -22,6 +24,19 @@ export default {
 
             console.log(this.piatto);
             console.log(this.costo);
+        },
+        RemoveFromCart(name) {
+
+            name = plate.name;
+            if (store.platesNames.includes(name)) {
+
+                this.store.platesNames.splice(this.name)
+
+                console.log(store.platesNames)
+            }
+            else {
+
+            }
         }
     },
     created () {
@@ -113,8 +128,19 @@ export default {
                         </div>
                     </div>
 
-                    <div class="card-plate-add" @click="AddToChart(plate.name, plate.price)">
-                        <i class="fa-solid fa-cart-plus"></i>
+                    <div class="">
+                        <div v-if="store.platesNames.includes(plate.name)">
+                            <div>
+                                
+                            </div>
+                            <i class="fa-solid fa-plus" @click="AddToCart(plate.name, plate.price)"></i>
+
+                            <i class="fa-solid fa-minus" @click="RemoveFromCart(plate.name)"></i>
+                        </div>
+                        <div v-else>
+
+                            <i class="fa-solid fa-cart-plus card-plate-add" @click="AddToCart(plate.name, plate.price)"></i>
+                        </div>
                     </div>
 
                 </div>
@@ -236,6 +262,10 @@ export default {
                     }
                 }
 
+                .fa-solid
+                {
+                    padding: 1rem;
+                }
 
                 .card-plate-add
                 {
