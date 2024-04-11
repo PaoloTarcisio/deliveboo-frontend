@@ -69,11 +69,11 @@ data() {
                           <div class="card-body">
                               <div class="d-flex justify-content-between">
                                 <span>
-                                  <h5 class="card-title">{{ piatto.nome }}</h5>
+                                  <h5 class="card-title h5-cart">{{ piatto.nome }}</h5>
                                 </span>
-                                <span>
+                                <span class="span-price">
                                   <p class="card-text">
-                                    {{ piatto.prezzo }}
+                                    € {{ piatto.prezzo }}
                                   </p>
                                 </span>
                               </div>
@@ -93,7 +93,7 @@ data() {
                       </li>
 
                       
-                      <h5 class="text-center my-4">
+                      <h5 class="text-center h5-cart my-4">
                         Stai acquistando:
                       </h5>
                       <li v-for="(piatto, index) in piattiAggiunti" :key="'added_' + index" class="card">
@@ -103,9 +103,9 @@ data() {
                                 <span>
                                   <h5 class="card-title">{{ piatto.nome }}</h5>
                                 </span>
-                                <span>
+                                <span class="span-price">
                                   <p class="card-text">
-                                    {{ piatto.prezzo }}
+                                    €  {{ piatto.prezzo }}
                                   </p>
                                 </span>
                               </div>
@@ -127,17 +127,15 @@ data() {
                                 </span>
                               </div>
                         </div>
-
                       </li>
-
                   </ul>
                 </div>
 
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">Devi pagare un totale di: </h5>
+                    <h5 class="card-title h5-cart">Devi pagare un totale di: </h5>
                     <p class="card-text tot-pay">
-                      {{ totale }}
+                      € {{ totale }}
                     </p>
                     <a href="/carrello" class="card-link text-decoration-none">
                       <button class="btn payment-btn d-flex">

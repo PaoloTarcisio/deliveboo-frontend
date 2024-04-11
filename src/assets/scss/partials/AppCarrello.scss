@@ -33,3 +33,12 @@
     font-size: medium;
     font-weight: bold;
 }
+.h5-cart {
+    color: $primary;
+}
+.span-price{
+    padding: 5px;
+}
+.span-price > p {
+    font-weight: bold;
+}
