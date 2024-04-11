@@ -9,24 +9,30 @@ data() {
         piatti: [{
             nome: "Carbonara",
             descrizione: "Pasta con le uova e guanciale, e pepe nero",
-            prezzo: "$15"
+            prezzo: 15
                     },
                     {
             nome: "Amatriciana",
-            descrizione: "Pasta sugo",
-            prezzo: "£20"
+            descrizione: "Pasta sugo con guangiale e pepe, possibilmente prendere pomodori pelati da schiacciare",
+            prezzo: 20
                     },
                 ],
-        piattiAggiunti: [{
-
-        
-        }]
+        piattiAggiunti: [],
+        totale: 0
       };
     },
     methods: {
       addToCart(piatto) {
         this.piattiAggiunti.push(piatto);
+        this.totale = this.calcoloPrezzo();
         console.log("Nuovo carrello:", this.carrello);
+      },
+      calcoloPrezzo() {
+        let totale = 0;
+        this.piattiAggiunti.forEach((piatto) => {
+          totale += piatto.prezzo;
+        });
+        return totale;
       }
     }
 };
@@ -53,14 +59,25 @@ data() {
                   <ul id="plates-list" class="plates-list">
                       <li v-for="(piatto, i) in piatti" :key="i" class="card">
                           <div class="card-body">
-                              <h5 class="card-title">{{ piatto.nome }}</h5>
-                              <p class="card-text">{{ piatto.descrizione }}</p>
-                              <p class="card-text">{{ piatto.prezzo }}</p>
+                              
+                              <div class="d-flex justify-content-between">
+                                <span>
+                                  <h5 class="card-title">{{ piatto.nome }}</h5>
+                                </span>
+                                <span>
+                                  <p class="card-text">
+                                    {{ piatto.prezzo }}
+                                  </p>
+                                </span>
+                              </div>
+                              <p class="card-text">
+                                {{ piatto.descrizione }}
+                              </p>
                           </div>
 
                           <button @click="addToCart(piatto)" class="add-btn px-3">
-                            Aggiungi al carrello
-                        </button>
+                              Aggiungi al carrello
+                          </button>
                       </li>
 
                       <h3>
@@ -78,6 +95,9 @@ data() {
                   </ul>
                 </div>
               </div>
+              <p>
+                devi pagare un totale di: {{ totale }}
+              </p>
               <button class="btn payment-btn d-flex">
                 vai al pagamento
               </button>
