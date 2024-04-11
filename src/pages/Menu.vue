@@ -7,6 +7,8 @@ export default {
     return {
         piatto: [],
         costo : [],
+        piatto: [],
+        costo : [],
         store,
         restaurant: [],
         };
