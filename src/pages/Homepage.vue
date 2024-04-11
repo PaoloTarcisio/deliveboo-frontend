@@ -11,13 +11,14 @@ export default {
             lastPage: 1,
             currentPageFiltered: 1,
             lastPageFiltered: 1,
-            selectedType: '',
+            selectedTypes: [], 
         };
     },
     methods: {
         clearMessage() {
             this.paymentSuccess = false;
         },
+        /*
         getRestaurantsByType(id, page){
             axios
                 .get('http://127.0.0.1:8000/api/restaurants/types/' + id, {
@@ -31,6 +32,15 @@ export default {
                     this.lastPageFiltered = response.data.results.last_page;
                     console.log(response);
                 });
+        },
+        */
+        selectType(typeId) {
+            const index = this.selectedTypes.indexOf(typeId);
+            if (index === -1) {
+                this.selectedTypes.push(typeId);
+            } else {
+                this.selectedTypes.splice(index, 1);
+            }
         },
         getRestaurants(page){
             axios
@@ -46,6 +56,7 @@ export default {
                     console.log(response.data);
                 });
         },
+        /*
         selectType(typeId){
 
             // selectedType corrisponde al tipo cliccato? Se no... imposta il nuovo valore... se si mettilo a stringa vuota
@@ -59,28 +70,16 @@ export default {
                 this.getRestaurants(this.currentPage);
             }
         },
+        */
         nextPage() {
-            // Se selectedType è vuoto controllo le pagine di tutti i ristoranti
-            if (this.selectedType == '') {
-                if (this.currentPage < this.lastPage) {
-                    this.getRestaurants(this.currentPage + 1);
-                }
-            // Altrimenti controllo le pagine filtrate
-            } else {
-                if (this.currentPageFiltered < this.lastPageFiltered) {
-                    this.getRestaurantsByType(this.selectedType, this.currentPageFiltered + 1);
-                }
-            }           
+            if (this.currentPage < this.lastPage) {
+                this.getRestaurants(this.currentPage + 1);
+            }
         },
+
         prevPage() {
-            if (this.selectedType == '') {
-                if (this.currentPage > 1) {
-                    this.getRestaurants(this.currentPage - 1);
-                }
-            } else {
-                if (this.currentPageFiltered > 1) {
-                    this.getRestaurantsByType(this.selectedType, this.currentPageFiltered - 1);
-                }
+            if (this.currentPage > 1) {
+                this.getRestaurants(this.currentPage - 1);
             }
         },
     },
@@ -92,6 +91,7 @@ export default {
         }
     },
     created () {
+        
         this.getRestaurants(this.currentPage);
 
         axios
@@ -100,6 +100,33 @@ export default {
                 this.types = response.data.results;
                 // console.log(this.types);
             });
+    },
+    computed: {
+        
+        filteredRestaurants() {
+            if (!this.selectedTypes.length) {
+            return this.restaurants; // Se non ci sono tipi selezionati, mostra tutti
+            }
+
+            return this.restaurants.filter(restaurant =>
+            this.selectedTypes.every(typeId =>
+                restaurant.types.some(type => type.id === typeId)
+            )
+            );
+        },
+
+        /*
+        filteredRestaurants() {
+            // Se non ci sono tipi selezionati, mostra tutti i ristoranti
+            if (!this.selectedTypes.length) {
+            return this.restaurants;
+            }
+            // Altrimenti, filtra l'array dei ristoranti
+            return this.restaurants.filter(restaurant =>
+            restaurant.types.some(type => this.selectedTypes.includes(type.id))
+            );
+        },
+        */
     }
 };
 </script>
@@ -128,7 +155,7 @@ export default {
                 <h1 class="text-center text-black">Guarda i ristoranti in base ai tuoi gusti!</h1>
                 <div class="row">
                     <div class="col-2 pt-4" v-for="type in types">
-                        <button type="button" @click="selectType(type.id)" class="types d-flex flex-column align-items-center justify-content-center" :class="selectedType == type.id ? 'active' : ''">
+                        <button type="button" @click="selectType(type.id)" class="types d-flex flex-column align-items-center justify-content-center" :class="{ 'active': selectedTypes.includes(type.id) }">
                             <div style="width: 60%; min-width: 50px;">
                                 <img class="w-100" :src="type.icon" alt="#">
                             </div>
@@ -145,7 +172,7 @@ export default {
 
     <section class="cards">
         <div class="row p-4">
-            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in restaurants">
+            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in filteredRestaurants">
                 <router-link class="btn btn-primary" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
                     <div class="card-img">
                         <img :src="restaurant.image" alt="restaurant.activity_name">
@@ -205,17 +232,14 @@ export default {
             color: $primary;
         }
 
-        .types:hover
+        .types:hover, .types.active
         {
             color: $tertiary;
             border: 2px solid $primary;
             background-color: $primary;
+            
         }
 
-        .active{
-            background-color: $primary;
-            color: white;
-        }
     }
 
 
