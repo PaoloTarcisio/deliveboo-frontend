@@ -5,6 +5,8 @@ import AppFooter from './components/AppFooter.vue';
 import AppCarrello from './components/AppCarrello.vue';
 
 import axios from 'axios';
+// IMPORTAZIONE DELLO STORE
+import { store } from './components/store.js'
 
 
 
