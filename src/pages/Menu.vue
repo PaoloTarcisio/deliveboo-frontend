@@ -2,28 +2,41 @@
 import axios from 'axios';
 import { store } from '../components/store';
 
-
 export default {
     data() {
     return {
+        piatto: [],
+        costo : [],
+        piatto: [],
+        costo : [],
         store,
         restaurant: [],
-        // platesNames: [],
-        // platesPrice: [],
         };
     },
     methods: {
-        AddToChart(name, price) {
-            // this.platesNames.push(name);
-            // this.platesPrice.push(price);
+        AddToCart(name, price) {
 
-            this.store.platesNames.push(name);
-            this.store.platesPrice.push(price);
+            this.piatto.push(name);
+            this.costo.push(price);
 
-            // console.log(this.platesNames);
-            // console.log(this.platesPrice);
-            console.log(this.store.platesNames);
-            console.log(this.store.platesPrice);
+            localStorage.setItem('piatto', JSON.stringify(this.piatto));
+            localStorage.setItem('costo', JSON.stringify(this.costo));
+
+            console.log(this.piatto);
+            console.log(this.costo);
+        },
+        RemoveFromCart(name) {
+
+            name = plate.name;
+            if (store.platesNames.includes(name)) {
+
+                this.store.platesNames.splice(this.name)
+
+                console.log(store.platesNames)
+            }
+            else {
+
+            }
         }
     },
     created () {
@@ -115,8 +128,19 @@ export default {
                         </div>
                     </div>
 
-                    <div class="card-plate-add" @click="AddToChart(plate.name, plate.price)">
-                        <i class="fa-solid fa-cart-plus"></i>
+                    <div class="">
+                        <div v-if="store.platesNames.includes(plate.name)">
+                            <div>
+                                
+                            </div>
+                            <i class="fa-solid fa-plus" @click="AddToCart(plate.name, plate.price)"></i>
+
+                            <i class="fa-solid fa-minus" @click="RemoveFromCart(plate.name)"></i>
+                        </div>
+                        <div v-else>
+
+                            <i class="fa-solid fa-cart-plus card-plate-add" @click="AddToCart(plate.name, plate.price)"></i>
+                        </div>
                     </div>
 
                 </div>
@@ -238,6 +262,10 @@ export default {
                     }
                 }
 
+                .fa-solid
+                {
+                    padding: 1rem;
+                }
 
                 .card-plate-add
                 {

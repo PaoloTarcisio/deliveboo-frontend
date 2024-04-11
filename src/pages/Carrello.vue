@@ -1,18 +1,52 @@
 <script>
 import axios from 'axios';
 
+//alert( localStorage.getItem('piatto', 1) );
 export default {
 
   data() {
     return {
+        piattoArray: JSON.parse(localStorage.getItem('piatto')) || [],
+        costoArray: []
      };
   },
+  methods: {
+    convertiStringheInNumeri(stringhe) {
+      const numeriConvertiti = [];
+      stringhe.forEach((stringa) => {
+        const numero = parseFloat(stringa);
+        if (!isNaN(numero)) {
+          numeriConvertiti.push(numero);
+        }
+      });
+      return numeriConvertiti;
+    },
+    sommaNumeri(numeriConvertiti) {
+      let somma = 0;
+      for (let i = 0; i < numeriConvertiti.length; i++) {
+        somma += numeriConvertiti[i];
+      }
+      return somma;
+    }
+  },
+  
+  created() {
+    this.costoArray = this.convertiStringheInNumeri(JSON.parse(localStorage.getItem('costo')) || []);
+  }
+  /*
+  methods: {
+    saveArrayToLocalStorage(arrayName, array) {
+      localStorage.setItem(arrayName, JSON.stringify(array));
+    }
+  },
+  */
 };
 </script>
 
 <template>
-    <!---->
+
    <div class="container-checkout" id="app">
+    
         <div class="container p-4">
             <div class="row">
                 <div class="col-7">
@@ -109,15 +143,26 @@ export default {
                             ciao
                         </span>
                     </span>
-                    <div class="container-list-group">
-                        <ul id="plates-list" class="plates-list text-center">
-                            
+                    <!--RIEPILOGO PIATTI E SOMMA-->
+                    <div class="container-list-group row">
+                        <ul id="plates-list" class="plates-list col-8">
+                            <li v-for="piatto in piattoArray" class="text-primary">
+                                {{ piatto }}
+                            </li>
                         </ul>
-                        <div class="text-center">
-                            <button class="add-btn px-3 mb-3">
-                                +
-                            </button>
-                        </div>
+                        <ul id="plates-list" class="plates-list col-4">
+                            <li v-for="costo in costoArray" class="text-end">
+                                <span class="bg-secondary text-center mb-3 p-2" style="border-radius: 40px;">
+                                    {{ costo }}
+                                </span>
+                            </li>
+                            <div class="p-3">
+                                la somma totale è di: 
+                                    <span class="bg-secondary text-center p-1" style="border-radius: 40px;">
+                                        {{ sommaNumeri(costoArray) }}
+                                    </span>
+                                </div>
+                        </ul>
                     </div>
                 </div>
             </div>
