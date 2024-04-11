@@ -5,7 +5,7 @@ import axios from 'axios';
 export default {
     data() {
     return {
-        restaurant: null,
+        restaurant: [],
         };
     },
     created () {
@@ -22,147 +22,267 @@ export default {
 </script>
 
 <template>
-    <div class="container pt-4 pb-4">
-        <div class="container-menu">
+    <div class="my-container">
+    
+        <!-- INFORMAZIONI RISTORANTE -->
+        
+        <section class="section-restourant-detail py-5">
+            <div class="restourant-detail">
 
-            <!--INFORMAZIONI RISTORANTE-->
-            <div class="row info-risto first-page">
-                <div class="col-4">
-                    <img src="./assets/img/esempio-img-progetto.jpg" alt="#" style="width: 400px;">
-                </div>
-                <div class="col-8 btn-info-restaurant">
-                    <h2 class="text-left">
-                        Menu le tre posate
-                    </h2>
-                    <small>
-                        35 min
-                    </small>
-                    <br>
-                    <span class="badge badge-secondary">Premium</span>
-                    <small>
-                        Consegna gratuita se hai il premium
-                    </small>
-                    <br>
-                    <div class="btn-group dropend">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Intolleranza?
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li class="bg-danger">
-                                Glutine
-                            </li>
-                            <li>
-                                Lattosio
-                            </li>
-                        </ul>
+                <div class="row">
+                    <div class="col-lg-4 col-md-5 col-sm-8" >
+                        <img :src="restaurant.image" alt="" class="info-restaurant">
                     </div>
-                    <p>
-                        SIAMO UN RISTORANTE,....
-
-                    </p>
-                </div>
-                <div class="col-8 btn-info-restaurant-second">
-                    <button class="btn btn-primary">
-                        sdf
-                    </button>
-                </div>
-            </div>
-            
-            <!--navbar-->
-
-            <div class="row navbar-menu second-page">
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-                <div class="col-1 p-3">
-                    <button class="btn">
-                       <a href="#">Novità</a>
-                    </button>
-                </div>
-
-
-
-            </div>
-
-            <!--fine navbar-->
-
-            <!--I VARI PIATTI E AGGIUNGERLI-->
-            <h3 class="my-5 text-center">
-                I nostri Primi piatti
-            </h3>
-            <p class="my-5 text-center" v-for="plate in restaurant.plates">
-                {{ plate.name }}
-
-            </p>
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-1 text-center">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="../src/assets/img/margherita-pizza.jpg" style="width: 600px;  height: 400px;" class="rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-
+                    <div class="col-lg-1 col-md-6 col-sm-0"></div>
+                    <div class="col-lg-7 col-md-5 col-sm-8 info-restaurant p-3">
+                        <h2 class="text-center pb-3">
+                            {{ restaurant.activity_name }}
+                        </h2>
+                        <p>
+                            {{ restaurant.address }}
+                        </p>
+                        <p>
+                            {{ restaurant.description }}
+                        </p>
+                        <div>
+                            <div>
+                                <h6>P.iva:</h6>
+                                {{ restaurant.VAT_number }}
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-            <!--fine row-->
-        </div>
+        </section>
+
+        <!-- MENU RISTORANTE 1-->
+        <section class="section-menu">
+            <h2 class="my-4 text-center">
+                Il nostro menù:
+            </h2>
+            <div class="row card-plate-row my-3">
+                <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3"  v-for="plate in restaurant.plates">
+                    <div class="img-card-plate m-3">
+                        <img :src="plate.image" alt="" class="info-restaurant">
+                    </div>
+                    <div class="card-plate-name">
+                        <h5 class="text-center">
+                            {{ plate.name }}
+                        </h5>
+                    </div>
+                    <div class="card-plate-price">
+                        <h6>
+                            {{ plate.price }} €
+                        </h6>
+                    </div>
+                    <div class="card-plate-description">
+                        {{ plate.description }}
+                    </div>
+                    <div class="card-plate-ingredients">
+                        Ingredienti:
+                        {{ plate.ingredients }}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- MENU RISTORANTE 2 -->
+            <!--<div class="row card-plate-row my-3">
+                <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3 px-5 py-3"  v-for="plate in restaurant.plates">
+                    <div class="img-card-plate m-3">
+                        <img :src="plate.image" alt="" class="info-restaurant">
+                    </div>
+
+                    <div class="card-plate-content">
+                        <div class="card-plate-name-price">
+                            <div class="card-plate-name">
+                                <h4 class="text-center">
+                                    {{ plate.name }}
+                                </h4>
+                            </div>
+        
+                            <div class="card-plate-price">
+                                <h5>
+                                    {{ plate.price }} €
+                                </h5>
+                            </div>
+                        </div>
+    
+                        <div class="card-plate-description-ingredients">
+                            <div class="card-plate-description mb-4">
+                                {{ plate.description }}
+                            </div>
+        
+                            <div class="card-plate-ingredients">
+                                <span class="ingredienti">
+                                    Ingredienti:
+                                </span>
+                                {{ plate.ingredients }}
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div>
+            </div>-->
+        </section>
     </div>
 
 </template>
 
 <style lang="scss" scoped>
-@import "../assets/scss/partials/menu.scss";
+@import "../assets/scss/partials/variables.scss";
+
+
+.my-container{
+    margin-top: 150px;
+
+
+    .section-restourant-detail
+    {
+        background: $tertiary;
+        
+        
+        .restourant-detail
+        {
+            width: 80%;
+            margin: 0 auto;
+
+            .row
+            {
+                justify-content: space-evenly;
+
+                .info-restaurant{
+                    background-color: $primary;
+                    color: $secondary;
+                    border-radius: 10px;
+                }
+                
+                img {
+                    width: 300px;
+                    height: 300px;
+                }
+            }
+        
+
+        }
+    }
+
+    .section-menu
+    {
+        text-align: center;
+
+
+        // STILE MENU 1
+        .card-plate-row
+        {
+            width: 90%;
+            margin: 0 auto;
+            justify-content: space-evenly;
+            .card-plate
+            {
+                background-color: $primary;
+                color: $secondary;
+                border-radius: 30px;
+                
+                
+                .img-card-plate{
+        
+                    
+                    img
+                    {
+                        width: 70%;
+                        border-radius: 130px;
+                        box-shadow: 3px 3px 10px;
+                    }
+                }
+
+            
+                .card-plate-ingredients{
+                    margin-top: 1rem;
+                    margin-bottom: 1rem;
+                    padding: 1rem;
+                    background-color: $secondary;
+                    color: $primary;
+                    border: 1px solid $secondary;
+                    border-radius: 20px;
+                }
+            }
+        }
+
+
+
+        //STILE MENU 2
+        /*.card-plate-row
+        {
+            flex-direction: column;
+            align-content: center;
+
+
+            .card-plate
+            {
+                display: flex;
+                justify-content: center;
+                width: 70%;
+                border-radius: 20px;
+                background-color: $primary;
+                color: $secondary;
+                border-radius: 30px;
+                
+
+                .img-card-plate
+                {
+                    img
+                    {
+                        width: 15rem;
+                        border-radius: 130px;
+                        box-shadow: 3px 3px 10px;
+                    }
+                }
+
+                
+                .card-plate-content
+                {
+                    flex-grow: 1;
+                    padding: 1rem;
+
+
+                    .card-plate-name-price
+                    {
+
+                        .card-plate-name
+                        {}
+
+                        .card-plate-price
+                        {}
+
+                    }
+
+                    
+                    .card-plate-description-ingredients
+                    {
+                        font-size: 1.1rem;
+                        .card-plate-description
+                        {
+
+                        }
+
+                        .card-plate-ingredients
+                        {
+
+                            .ingredienti
+                            {
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }*/
+    }
+}
+
 </style>
