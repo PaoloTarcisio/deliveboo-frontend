@@ -67,11 +67,7 @@ export default {
         */
     },
     mounted() {
-        if (this.paymentSuccess) {
-            setTimeout(() => {
-                this.paymentSuccess = false;
-            }, 5000); // Imposta il timeout a 5 secondi
-        }
+
     },
     created () {
         
@@ -117,6 +113,12 @@ export default {
 <template>
     <!-- JUMBO -->
     <div class="container-fluid">
+
+        <div v-if="paymentSuccess" class="alert alert-success message-payment text-center w-50 mx-auto">
+            Pagamento avvenuto con successo!
+            <button class="btn" @click="clearMessage">X</button>
+        </div>
+
         <section class="background-header">
             <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
                 <h1>
