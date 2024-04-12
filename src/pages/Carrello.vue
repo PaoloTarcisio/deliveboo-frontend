@@ -34,6 +34,7 @@ export default {
   
   created() {
     this.costoArray = this.convertiStringheInNumeri(JSON.parse(localStorage.getItem('costo')) || []);
+
     this.piattoArray.forEach((piatto) => {
       if (this.piattiConteggio[piatto]) {
         this.piattiConteggio[piatto]++;
@@ -41,6 +42,7 @@ export default {
         this.piattiConteggio[piatto] = 1;
       }
     });
+
   }
   /*
   methods: {
@@ -149,7 +151,7 @@ export default {
                             CARRELLO
                         </h2>
                         <span id="piatti-presenti" class="badge rounded-pill my-2 p-2">
-                            ciao
+                            X
                         </span>
                     </span>
                     <!--RIEPILOGO PIATTI E SOMMA-->
