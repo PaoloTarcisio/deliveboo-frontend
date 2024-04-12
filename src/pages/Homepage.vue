@@ -178,7 +178,8 @@ export default {
             </div>
 
             <h1 v-else class="text-center text-primary fs-1">
-                Nessun ristorante disponibile
+                <p>Nessun ristorante disponibile</p>
+                <a class="badge rounded-5 p-4 text-secondary bg-primary link-underline link-underline-opacity-0" href="/">Torna ai ristoranti</a>
             </h1>
         </div>
     </section>
