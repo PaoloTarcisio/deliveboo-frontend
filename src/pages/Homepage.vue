@@ -157,7 +157,7 @@ export default {
 
     <section class="cards">
         <div class="row p-4" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
-            <div class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in filteredRestaurants">
+            <div v-if="filteredRestaurants.length != 0" class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in filteredRestaurants">
                 <router-link class="btn btn-primary" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
                     <div class="card-img">
                         <img :src="restaurant.image" alt="restaurant.activity_name">
@@ -170,9 +170,16 @@ export default {
                         <div class="my-card-description p-3">
                             <p>{{ restaurant.description }}</p>
                         </div>
+                        <p v-for="type in restaurant.types">
+                            <span class="badge rounded-4 text-primary bg-secondary fs-5 mb-2">{{type.name}}</span>
+                        </p>
                     </div>
                 </router-link>
             </div>
+
+            <h1 v-else class="text-center text-primary fs-1">
+                Nessun ristorante disponibile
+            </h1>
         </div>
     </section>
 
