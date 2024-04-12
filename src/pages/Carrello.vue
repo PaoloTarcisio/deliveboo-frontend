@@ -1,63 +1,83 @@
 <script>
 import axios from 'axios';
 
-//alert( localStorage.getItem('piatto', 1) );
 export default {
-
   data() {
     return {
-        piattoArray: JSON.parse(localStorage.getItem('piatto')) || [],
-        costoArray: [],
-        piattiConteggio: {}
+        piattoCostoArray: [],
+        counter: {},
+        totalePiattiCounter: 0,
+        PrezzoFinale: 0
      };
   },
   methods: {
     convertiStringheInNumeri(stringhe) {
-      const numeriConvertiti = [];
-      stringhe.forEach((stringa) => {
-        const numero = parseFloat(stringa);
-        if (!isNaN(numero)) {
-          numeriConvertiti.push(numero);
-        }
-      });
-      return numeriConvertiti;
+        const numeriConvertiti = [];
+        stringhe.forEach((stringa) => {
+            const numero = parseFloat(stringa);
+            if (!isNaN(numero)) {
+            numeriConvertiti.push(numero);
+            }
+        });
+        return numeriConvertiti;
     },
-    sommaNumeri(numeriConvertiti) {
-      let somma = 0;
-      for (let i = 0; i < numeriConvertiti.length; i++) {
-        somma += numeriConvertiti[i];
-      }
-      return somma;
+    elaboraPiattoCostoArray() {
+        const piattoArray = JSON.parse(localStorage.getItem('piatto')) || [];
+        const costoArray = this.convertiStringheInNumeri(JSON.parse(localStorage.getItem('costo')) || []);
+        
+        
+        for (let i = 0; i < piattoArray.length; i++) {
+            const piatto = piattoArray[i];
+            const costo = costoArray[i];
+            this.aggiungiPiattoCosto(piatto, costo);
+        }
+        
+        
+        this.counter = {};
+        const piattoCostoMap = {}; 
+        for (let i = 0; i < this.piattoCostoArray.length; i++) {
+            const { piatto, costo } = this.piattoCostoArray[i];
+            if (!piattoCostoMap[piatto]) {
+                piattoCostoMap[piatto] = costo;
+            } else {
+                piattoCostoMap[piatto] += costo;
+            }
+            this.counter[piatto] = (this.counter[piatto] || 0) + 1;
+        }
+        
+      
+        this.piattoCostoArray = Object.keys(piattoCostoMap).map(piatto => ({
+            piatto,
+            costo: piattoCostoMap[piatto]
+        }));
+
+        this.totalePiattiCounter = piattoArray.length;
+
+        this.PrezzoFinale = this.calcolaPrezzoFinale();
+
+
+    },
+    aggiungiPiattoCosto(piatto, costo) {
+        this.piattoCostoArray.push({ piatto, costo });
+    },
+    calcolaPrezzoFinale() {
+        let sum = 0;
+        for (let i = 0; i < this.piattoCostoArray.length; i++) {
+            sum += this.piattoCostoArray[i].costo;
+        }
+        return sum;
     }
   },
-  
-  
   created() {
-    this.costoArray = this.convertiStringheInNumeri(JSON.parse(localStorage.getItem('costo')) || []);
-
-    this.piattoArray.forEach((piatto) => {
-      if (this.piattiConteggio[piatto]) {
-        this.piattiConteggio[piatto]++;
-      } else {
-        this.piattiConteggio[piatto] = 1;
-      }
-    });
-
+      this.elaboraPiattoCostoArray();
   }
-  /*
-  methods: {
-    saveArrayToLocalStorage(arrayName, array) {
-      localStorage.setItem(arrayName, JSON.stringify(array));
-    }
-  },
-  */
 };
 </script>
+
 
 <template>
 
    <div class="container-checkout" id="app">
-    
         <div class="container p-4">
             <div class="row">
                 <div class="col-7">
@@ -151,34 +171,34 @@ export default {
                             CARRELLO
                         </h2>
                         <span id="piatti-presenti" class="badge rounded-pill my-2 p-2">
-                            X
+                            {{ totalePiattiCounter }}
                         </span>
                     </span>
                     <!--RIEPILOGO PIATTI E SOMMA-->
-                    <div class="container-list-group row">
-                        <ul id="plates-list" class="plates-list col-8">
-                            <li v-for="(count, piatto) in piattiConteggio" class="text-primary">
-                                {{ piatto }}
-                                <span v-if="count > 1" class="bg-secondary text-center mb-3 p-2" style="border-radius: 40px;
-                                                                                                        font-weight: bold;">
-                                    {{ count }}
+                    <div class="container-list-group p-4 d-flex flex-column" style="height: 400px;">
+                        <div class="text-black d-flex justify-content-between" v-for="(item, index) in piattoCostoArray" :key="index">
+
+                            <!--Doppio span annidato per fare in modo da far comparire il counter del numero di piatti di fianco al piatto-->
+                            <span>
+                                {{ item.piatto }}
+                                <span class="bg-danger" v-if="counter[item.piatto] > 1">
+                                    x {{ counter[item.piatto] }}
                                 </span>
-                            </li>
-                        </ul>
-                        <ul id="plates-list" class="plates-list col-4">
-                            <li v-for="costo in costoArray" class="text-end">
-                                <span class="bg-secondary text-center mb-3 p-2" style="border-radius: 40px;">
-                                    {{ costo }}
+                                <span v-else class="" style="visibility: hidden;">
                                 </span>
-                            </li>
-                            <div class="p-3">
-                                la somma totale è di: 
-                                    <span class="bg-secondary text-center p-1" style="border-radius: 40px;">
-                                        {{ sommaNumeri(costoArray) }}
-                                    </span>
-                            </div>
-                        </ul>
+                            </span>
+                            <!--Fine doppio span-->
+                            <span>{{ item.costo }}</span>
+                            
+                        </div>
+
+                        <div class=" d-flex align-items-end text-end text-danger">
+                            <span class="mt-auto">
+                                {{ PrezzoFinale }}
+                            </span>
+                        </div>
                     </div>
+                    <!--FINE RIEPILOGO PIATTI E SOMMA-->
                 </div>
             </div>
         </div>
