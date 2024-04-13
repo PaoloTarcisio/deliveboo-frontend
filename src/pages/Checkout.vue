@@ -77,25 +77,85 @@ export default {
 </script>
 
 <template>
-    <div class="mt-5 pt-5">
-        <form class="p-5 m-5 bg-success-subtle" @submit.prevent="submitOrder">
-            <input type="text" v-model="orderData.name" placeholder="Nome e Cognome" required>
-            <input type="text" v-model="orderData.phone" placeholder="Telefono" required>
-            <input type="text" v-model="orderData.address" placeholder="Indirizzo" required>
-            <textarea class="d-block mt-3" v-model="orderData.notes" placeholder="Note"></textarea>
+  <div class="mt-5 pt-5 container">
+    <!-- Utilizzo di .card e .card-body per lo stile di Bootstrap -->
+    <div class="card p-5 m-5">
+      <div class="card-body">
 
-            <!-- qui dovrebbero esserci i piatti dinamici -->
-            
-            <div id="dropin-container" class="px-5 pt-5 mt-5"></div>
+        <div class="d-flex">
+                <!-- Form con gestione dell'evento submit -->
+            <div class="row mb-3 w-75 p-3">
+            <form @submit.prevent="submitOrder">
+                
 
-            <button type="submit" id="submit-button" class="button button--small button--green m-5">Purchase</button>
-        </form>
-        
+                <div class="col py-3">
+                    <label for="name" class="form-label">Nome e Cognome</label>
+                    <input type="text" class="form-control" id="name" v-model="orderData.name" placeholder="Inserisci il tuo nome e cognome" required>
+                </div>
+                <div class="col py-3">
+                    <label for="phone" class="form-label">Telefono</label>
+            <input type="text" class="form-control" id="phone" v-model="orderData.phone" placeholder="Inserisci il tuo telefono" required>
+                </div>
+                <div class="col py-3">
+                    <label for="address" class="form-label">Indirizzo</label>
+            <input type="text" class="form-control" id="address" v-model="orderData.address" placeholder="Inserisci il tuo indirizzo" required>
+                </div>
+                <div class="col py-3">
+                    <label for="notes" class="form-label">Note</label>
+            <textarea class="form-control" id="notes" v-model="orderData.notes" placeholder="Note aggiuntive" rows="3"></textarea>
+                </div>
+
+                <p class="text-danger">Qui ci dovrebbe andare il repilogo dei piatti presi dinamicamente 
+                    sennò non invia il form con i dati giusti con id e quantità (vedi esempio statico nello script)
+                </p>
+
+                <p class="text-danger">
+                    se si vuole mettere il riepilogo dei piatti nella parte destra bisognerà vedere come fare nel carrello
+                    ma l'id dei piatti e la loro quantità devono essere submittate nel form
+                </p>
+                
+                <div id="dropin-container" class="pt-3"></div>
+
+                <!-- Bottone di invio del form con classi Bootstrap per lo styling -->
+                <button type="submit" id="submit-button" class="button button--small button--green">Purchase</button>
+            </form>
+            </div>
+
+            <div class="row mb-3 w-25 m-3 cart rounded-3">
+
+                <!--bisogna vedere come e se metterli qui se servono nel form-->
+
+                Carrello
+
+            </div>
+        </div>
+
+
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
     @import "../assets/scss/partials/checkout.scss";
+
+template {
+    background-color: $tertiary;
+}
+
+.card {
+    background-color: $primary;
+}
+
+.cart {
+    background-color: $tertiary;
+}
+
+label {
+    color: $secondary;
+    font-weight: bold;
+}
+
 .button {
   cursor: pointer;
   font-weight: 500;
