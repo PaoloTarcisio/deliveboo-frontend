@@ -2,63 +2,116 @@
 import axios from 'axios';
 import { store } from '../components/store';
 
+
 export default {
     data() {
     return {
-        piatto: [],
-        costo : [],
-        piatto: [],
-        costo : [],
+        piatti: "",
+        prezzi: "",
         store,
         restaurant: [],
+        Cart :[],
         };
     },
     methods: {
         AddToCart(name, price) {
 
-            this.piatto.push(name);
-            this.costo.push(price);
+        // ------------- AGGIUNGO I PIATTI AL CARRELLO --------------
 
-            localStorage.setItem('piatto', JSON.stringify(this.piatto));
-            localStorage.setItem('costo', JSON.stringify(this.costo));
 
-            console.log(this.piatto);
-            console.log(this.costo);
+            if (this.piatti.includes("")) {
+                this.piatti = [];
+                // console.log(this.piatti)
+            }
+            // Aggiungo il piatto
+            this.piatti.push(name);
+            // console.log(this.piatti)                  Funziona
+
+            localStorage.setItem('PiattiDalMenu', this.piatti);
+
+
+        // ------------- AGGIUNGO I PREZZI AL CARRELLO --------------
+
+
+            if (this.prezzi.includes("")) {
+                    this.prezzi = [];
+                    console.log(this.prezzi)
+            }
+            // Aggiungo il piatto
+            this.prezzi.push(price);
+            // console.log(this.prezzi)                  Funziona
+
+            localStorage.setItem('prezziDalMenu', this.prezzi);
+
+
+
+
+           
         },
         RemoveFromCart(name) {
 
-            name = plate.name;
-            if (store.platesNames.includes(name)) {
+            // name = plate.name;
+            // if (store.platesNames.includes(name)) {
 
-                this.store.platesNames.splice(this.name)
+            //     this.store.platesNames.splice(this.name)
 
-                console.log(store.platesNames)
+                // console.log(store.platesNames)
             }
-            else {
+            // else {
 
-            }
-        }
+            // }
+        // }
     },
+
+    mounted() {
+    },
+    
+    
     created () {
         axios
-            .get('http://127.0.0.1:8000/api/restaurants/' + this.$route.params.id)
-            .then(response => {
-                this.restaurant = response.data.results;
-                this.plates = response.data.results.plates;
-                // console.log(this.restaurant);
-                // console.log(this.plates);
-            });
+        .get('http://127.0.0.1:8000/api/restaurants/' + this.$route.params.id)
+        .then(response => {
+            this.restaurant = response.data.results;
+            this.plates = response.data.results.plates;
+            // console.log(this.restaurant);
+            // console.log(this.plates);
+
+        });
+
+        // ------------- PRENDO I PIATTI DEL CARRELLO E LO RESETTO SE VUOTO --------------
+
+        this.piatti = localStorage.getItem('piattiDaCarrello');
+
+        if (this.piatti == "") {
+            this.piatti = [];
+            // console.log(this.piatti);
+        }
+
+        this.piatti = localStorage.getItem('piattiDaCarrello').split(',');
+
+        // ------------- PRENDO I PREZZI DEL CARRELLO E LO RESETTO SE VUOTO --------------
+
+        this.prezzi = localStorage.getItem('prezziDaCarrello');
+
+        if (this.prezzi == "") {
+            this.prezzi = [];
+            // console.log(this.prezzi);
+        }
+
+        this.prezzi = localStorage.getItem('prezziDaCarrello').split(',');
+
     }
 }
 </script>
 
 <template>
+
     <div class="my-container">
     
         <!-- INFORMAZIONI RISTORANTE -->
         
         <section class="section-restourant-detail py-5">
-            <div class="restourant-detail">
+            <div class="restourant-detail ">
 
                 <div class="row">
                     <div class="col-lg-4 col-md-5 col-sm-8" >
@@ -66,7 +119,7 @@ export default {
                     </div>
                     <div class="col-lg-1 col-md-6 col-sm-0"></div>
                     <div class="col-lg-7 col-md-5 col-sm-8 info-restaurant p-3">
-                        <h2 class="text-center pb-3">
+                        <h2 class="text-center p-3">
                             {{ restaurant.activity_name }}
                         </h2>
                         <p>

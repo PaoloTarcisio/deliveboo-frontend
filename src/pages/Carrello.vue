@@ -66,16 +66,44 @@ export default {
             sum += this.piattoCostoArray[i].costo;
         }
         return sum;
+    },
+
+
+    
+    ResetCarrello(array,prezzi) {
+
+        // ------------- RESETTO IL CARRELLO --------------
+        
+        array = "";
+        prezzi = "";
+        // console.log(array);
+        console.log(prezzi);
+        localStorage.setItem("piattiDaCarrello", array);
+        localStorage.setItem("prezziDaCarrello", prezzi);
     }
-  },
-  created() {
-      this.elaboraPiattoCostoArray();
-  }
+    },
+    created() {
+        this.elaboraPiattoCostoArray();
+
+        // ------------- PRENDO I PIATTI DA MENU --------------
+
+        let piattiArrivati = localStorage.getItem("PiattiDalMenu").split(",");
+            // console.log(piattiArrivati);
+            localStorage.setItem('piattiDaCarrello', piattiArrivati);
+
+        // ------------- PRENDO I PREZZI DA MENU --------------
+
+        let prezziArrivati = localStorage.getItem("prezziDalMenu");
+            console.log(prezziArrivati);
+            localStorage.setItem('prezziDaCarrello', prezziArrivati);
+
+    },
 };
 </script>
 
 
 <template>
+
 
    <div class="container-checkout" id="app">
         <div class="container p-4">
@@ -197,6 +225,10 @@ export default {
                                 {{ PrezzoFinale }}
                             </span>
                         </div>
+
+                        <button @click="ResetCarrello(piattiArrivati, prezziArrivati)">
+                            RESET CARRELLO
+                        </button>
                     </div>
                     <!--FINE RIEPILOGO PIATTI E SOMMA-->
                 </div>
