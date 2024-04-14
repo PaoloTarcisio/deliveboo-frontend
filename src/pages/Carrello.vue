@@ -7,7 +7,9 @@ export default {
         piattoCostoArray: [],
         counter: {},
         totalePiattiCounter: 0,
-        PrezzoFinale: 0
+        PrezzoFinale: 0,
+        piattiDaMenu: '',
+        prezziDaMenu: '',
      };
   },
   methods: {
@@ -66,38 +68,57 @@ export default {
             sum += this.piattoCostoArray[i].costo;
         }
         return sum;
+    },    
+    ResetCarrello(piattiDaMenu, prezziDaMenu) {
+
+        // Setto piatti/prezzi vuoti
+        piattiDaMenu = '';
+        prezziDaMenu = '';
+
+        // Aggiorno il menu
+        localStorage.setItem("piattiDaCart", piattiDaMenu);
+        localStorage.setItem("prezziDaCart", prezziDaMenu);
     },
-
-
-    
-    ResetCarrello(array,prezzi) {
-
-        // ------------- RESETTO IL CARRELLO --------------
-        
-        array = "";
-        prezzi = "";
-        // console.log(array);
-        console.log(prezzi);
-        localStorage.setItem("piattiDaCarrello", array);
-        localStorage.setItem("prezziDaCarrello", prezzi);
-    }
     },
-    created() {
+    created(){
         this.elaboraPiattoCostoArray();
 
-        // ------------- PRENDO I PIATTI DA MENU --------------
+        // Metto il contenuto dal menu qui dentro
+        this.piattiDaMenu = localStorage.getItem('piattiDaMenu');
+        this.prezziDaMenu = localStorage.getItem('prezziDaMenu');
 
-        let piattiArrivati = localStorage.getItem("PiattiDalMenu").split(",");
-            // console.log(piattiArrivati);
-            localStorage.setItem('piattiDaCarrello', piattiArrivati);
+        /*
+            Se quello arrivato è pieno e c'è una virgola,
+            setto i piatti e i prezzi del carrello,
+            altrimenti gli metto a vuoti
+        */
+        if (this.piattiDaMenu && this.piattiDaMenu.includes(',')) {
+            this.piattiDaMenu = this.piattiDaMenu.split(',');
+        } else {
+            this.piattiDaMenu = [];
+        }
 
-        // ------------- PRENDO I PREZZI DA MENU --------------
+        if (this.prezziDaMenu && this.prezziDaMenu.includes(',')) {
+            this.prezziDaMenu = this.prezziDaMenu.split(',');
+        } else {
+            this.prezziDaMenu = [];
+        }
 
-        let prezziArrivati = localStorage.getItem("prezziDalMenu");
-            console.log(prezziArrivati);
-            localStorage.setItem('prezziDaCarrello', prezziArrivati);
+        /*
+            Se il mio array piatti/prezzi contiene qualcosa,
+            li invio al menu
+        */
+        if (this.piattiDaMenu.length > 0) {
+            localStorage.setItem('piattiDaCart', this.piattiDaMenu);
+        }
 
-    },
+        if (this.prezziDaMenu.length > 0) {
+            localStorage.setItem('prezziDaCart', this.prezziDaMenu);
+        }
+
+        console.log(this.piattiDaMenu);
+        console.log(this.prezziDaMenu);
+    }
 };
 </script>
 
@@ -226,7 +247,7 @@ export default {
                             </span>
                         </div>
 
-                        <button @click="ResetCarrello(piattiArrivati, prezziArrivati)">
+                        <button @click="ResetCarrello(piattiDaMenu, prezziDaMenu)">
                             RESET CARRELLO
                         </button>
                     </div>

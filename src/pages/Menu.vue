@@ -6,47 +6,28 @@ import { store } from '../components/store';
 export default {
     data() {
     return {
-        piatti: "",
-        prezzi: "",
+        piatti: [],
+        prezzi: [],
+        piattiDaCart: '',
         store,
         restaurant: [],
         Cart :[],
         };
     },
     methods: {
+        // Verifica se la stringa è vuota o non definita
+        isValidString(str) {
+            return str && typeof str === 'string' && str.trim() !== '';
+        },
         AddToCart(name, price) {
 
-        // ------------- AGGIUNGO I PIATTI AL CARRELLO --------------
-
-
-            if (this.piatti.includes("")) {
-                this.piatti = [];
-                // console.log(this.piatti)
-            }
-            // Aggiungo il piatto
+            // Pusho nome/prezzo
             this.piatti.push(name);
-            // console.log(this.piatti)                  Funziona
-
-            localStorage.setItem('PiattiDalMenu', this.piatti);
-
-
-        // ------------- AGGIUNGO I PREZZI AL CARRELLO --------------
-
-
-            if (this.prezzi.includes("")) {
-                    this.prezzi = [];
-                    console.log(this.prezzi)
-            }
-            // Aggiungo il piatto
             this.prezzi.push(price);
-            // console.log(this.prezzi)                  Funziona
 
-            localStorage.setItem('prezziDalMenu', this.prezzi);
-
-
-
-
-           
+            // Invio al carrello
+            localStorage.setItem('piattiDaMenu', this.piatti);
+            localStorage.setItem('prezziDaMenu', this.prezzi);       
         },
         RemoveFromCart(name) {
 
@@ -62,11 +43,6 @@ export default {
             // }
         // }
     },
-
-    mounted() {
-    },
-    
-    
     created () {
         axios
         .get('http://127.0.0.1:8000/api/restaurants/' + this.$route.params.id)
@@ -78,28 +54,31 @@ export default {
 
         });
 
-        // ------------- PRENDO I PIATTI DEL CARRELLO E LO RESETTO SE VUOTO --------------
+        // Setto il contenuto di quello che arriva da carrello
+        let piattiDaCart = localStorage.getItem('piattiDaCart');
+        let prezziDaCart = localStorage.getItem('prezziDaCart');
 
-        this.piatti = localStorage.getItem('piattiDaCarrello');
-
-        if (this.piatti == "") {
+        /*
+            Se il contenuto c'è e non è '',
+            setto i piatti/prezzi,
+            altrimenti li setto a vuoti e li riinvio al carrello
+        */
+        if (piattiDaCart && piattiDaCart !== '') {
+            this.piatti = piattiDaCart.split(',');
+        } else {
             this.piatti = [];
-            // console.log(this.piatti);
+            localStorage.setItem("piattiDaMenu", this.piatti);
         }
 
-        this.piatti = localStorage.getItem('piattiDaCarrello').split(',');
-
-        // ------------- PRENDO I PREZZI DEL CARRELLO E LO RESETTO SE VUOTO --------------
-
-        this.prezzi = localStorage.getItem('prezziDaCarrello');
-
-        if (this.prezzi == "") {
+        if (prezziDaCart && prezziDaCart !== '') {
+            this.prezzi = prezziDaCart.split(',');
+        } else {
             this.prezzi = [];
-            // console.log(this.prezzi);
+            localStorage.setItem("prezziDaMenu", this.prezzi);
         }
 
-        this.prezzi = localStorage.getItem('prezziDaCarrello').split(',');
-
+        console.log(this.piatti);
+        console.log(this.prezzi);
     }
 }
 </script>
