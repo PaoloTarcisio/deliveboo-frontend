@@ -169,11 +169,11 @@ export default {
                             </div>
                             <i class="fa-solid fa-plus" @click="addToCart(plate, 1)"></i>
 
-                            <i class="fa-solid fa-minus" @click="removeFromCart(plate.name)"></i>
+                            <i class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></i>
                         </div>
                         <div>
 
-                            <i class="fa-solid fa-cart-plus card-plate-add" @click="addToCart(plate.name)"></i>
+                            <i class="fa-solid fa-cart-plus card-plate-add" @click="addToCart(plate, 1)"></i>
                         </div>
                     </div>
 
