@@ -146,20 +146,21 @@ export default {
                                 {{ plate.ingredients }}
                             </div>
                         </div>
+                        
+                        <div class="card-plate-order pt-3">
+                            <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
+                            <div v-if="getQuantity(plate.id)> 0">
+                                <button class="fa-solid fa-plus" @click="addToCart(plate, 1)"></button>
+                                <span>{{ getQuantity(plate.id) }}</span> <!-- Mostra la quantità -->
+                                <button class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></button>
+                                <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> <!-- Bottone per rimuovere tutto -->
+                            </div>
+                            <div v-else>
+                                <button @click="addToCart(plate, 1)"><i class="fa-solid fa-cart-plus"></i></button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
-                        <div v-if="getQuantity(plate.id) > 0">
-                            <i class="fa-solid fa-plus" @click="addToCart(plate, 1)"></i>
-                            <span>{{ getQuantity(plate.id) }}</span> <!-- Mostra la quantità -->
-                            <i class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></i>
-                            <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> <!-- Bottone per rimuovere tutto -->
-                        </div>
-                        <div v-else>
-                            <button @click="addToCart(plate, 1)">Aggiungi al carrello</button>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -280,21 +281,40 @@ export default {
                     }
                 }
 
-                .fa-solid
+                .card-plate-order
                 {
-                    padding: 1rem;
-                }
+                    text-align: center;
 
-                .card-plate-add
-                {
-                    padding: 1rem;
+                    
+
                     align-self: flex-end;
-                    border: 2px solid $secondary;
-                    border-radius: 2rem;
                     color: $secondary;
+                    
+                    > div {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
 
+                    button
+                    {
+                        background-color: transparent;
+                        color: $secondary;
+                        border: 2px solid $secondary;
+                        border-radius: 2rem;
+                        padding: 12px 12px;
+                    
+                    }
+
+                    button:hover {
+                        background-color: $secondary;
+                        color: $primary;
+                    }
+
+                    span {
+                        padding: 10px;
+                    }
                 }
-
             }
         }
     }
