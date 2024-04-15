@@ -6,6 +6,7 @@ export default {
     data() {
         return {
         cart: [],
+        totalItem: 0,
         orderData: {
                 name: '',
                 phone: '',
@@ -27,6 +28,7 @@ export default {
                 this.cart.push({...item, quantity: quantity});
             }
             this.updateLocalStorage();
+            this.calculateTotalItem();
         },
 
         decreaseQuantity(plateId) {
@@ -37,6 +39,7 @@ export default {
                 this.removeFromCart(plateId);
             }
             this.updateLocalStorage();
+            this.calculateTotalItem();
         },
 
         removeFromCart(plateId) {
@@ -45,6 +48,7 @@ export default {
                 this.cart.splice(index, 1);
             }
             this.updateLocalStorage();
+            this.calculateTotalItem();
         },
 
         updateLocalStorage() {
@@ -54,10 +58,19 @@ export default {
         loadFromLocalStorage() {
             const storedCart = localStorage.getItem('cart');
             this.cart = storedCart ? JSON.parse(storedCart) : [];
+            this.calculateTotalItem();
         },
 
         calculateTotal() {
             return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+        },
+        svuotaCarrello() {
+            this.cart.splice(0, this.cart.length);
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+        },
+        calculateTotalItem() {
+            this.totalItem = this.cart.reduce((total, item) => total + item.quantity, 0);
+            localStorage.setItem('totalItem', this.totalItem);
         },
 
         setupBraintree() {
@@ -123,6 +136,10 @@ export default {
             <button @click="decreaseQuantity(item.plateId)">-</button>
             <button @click="addToCart(item, 1)">+</button>
             <button @click="removeFromCart(item.plateId)">Rimuovi</button>
+                <div class="bg-danger">
+                    <button @click="svuotaCarrello">Svuota Carrello</button>
+                </div>
+                <h2>{{ totalItem }}</h2>
           </div>
           <h3>Totale: {{ calculateTotal() }} €</h3>
         </div>

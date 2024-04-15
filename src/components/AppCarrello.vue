@@ -5,45 +5,26 @@ export default {
 
 data() {
   return {
-      piattoArray: JSON.parse(localStorage.getItem('piatto')) || [],
-      costoArray: JSON.parse(localStorage.getItem('costo')) || [],
-        piatti: [{
-            nome: "Carbonara",
-            descrizione: "Pasta con le uova e guanciale, e pepe nero",
-            prezzo: 15
-                    },
-                    {
-            nome: "Amatriciana",
-            descrizione: "Pasta sugo con guangiale e pepe, possibilmente prendere pomodori pelati da schiacciare",
-            prezzo: 20
-                    },
-                ],
-        piattiAggiunti: [],
-        totale: 0
+      cart: [],
+      totalItem: 0
       };
 
     },
     methods: {
-      addToCart(piatto) {
-        this.piattiAggiunti.push(piatto);
-        this.totale = this.calcoloPrezzo();
-        console.log("Nuovo carrello:", this.carrello);
+      loadFromLocalStorage() {
+        const storedCart = localStorage.getItem('cart');
+        this.cart = storedCart ? JSON.parse(storedCart) : [];
+        this.calculateTotalItem();
+        console.log('Carrello caricato:', this.cart);
       },
-      calcoloPrezzo() {
-        let totale = 0;
-        this.piattiAggiunti.forEach((piatto) => {
-          totale += piatto.prezzo;
-        });
-        return totale;
-      },
-      removeToCart(piatto) {
-        const j = this.piattiAggiunti.indexOf(piatto);
-        if (j !== -1) {
-          this.piattiAggiunti.splice(j, 1);
-          this.totale = this.calcoloPrezzo();
-        }
-      }
-    }
+      
+      calculateTotalItem() {
+            this.totalItem = this.cart.reduce((total, item) => total + item.quantity, 0);
+        },
+    },
+    mounted() {
+     this.loadFromLocalStorage();
+   }
 };
 </script>
 
@@ -52,6 +33,9 @@ data() {
     <button class="btn-cart" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
         <i class="fa-solid fa-cart-shopping"></i>
     </button>
+
+    <div class="badge-counter">
+    </div>
 
     <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
         <div class="offcanvas-header">
@@ -67,31 +51,11 @@ data() {
                 
                 <!---->
                 <div class="container-list-group">
-                  {{ piatto }}
                   <ul class="plates-list p-0">
-                      <li v-for="(piatto, i) in piatti" :key="i" class="card">
+                      <li class="card">
                           <div class="card-body">
                               <div class="d-flex justify-content-between">
-                                <span>
-                                  <h5 class="card-title h5-cart">{{ piatto.nome }}</h5>
-                                </span>
-                                <span class="span-price">
-                                  <p class="card-text">
-                                    € {{ piatto.prezzo }}
-                                  </p>
-                                </span>
-                              </div>
-                              <div class="d-flex justify-content-between">
-                                <span>
-                                  <p class="card-text">
-                                    {{ piatto.descrizione }}
-                                  </p>
-                                </span>
-                                <span>
-                                  <button @click="addToCart(piatto)" class="add-btn">
-                                      +
-                                  </button>
-                                </span>
+                                m
                               </div>
                           </div>
                       </li>
@@ -100,32 +64,31 @@ data() {
                       <h5 class="text-center h5-cart my-4">
                         Stai acquistando:
                       </h5>
-                      <li v-for="(piatto, index) in piattiAggiunti" :key="'added_' + index" class="card">
+                      <li class="card">
                           
                         <div class="card-body">
                               <div class="d-flex justify-content-between">
                                 <span>
-                                  <h5 class="card-title">{{ piatto.nome }}</h5>
+                                  <h5 class="card-title"></h5>
                                 </span>
                                 <span class="span-price">
                                   <p class="card-text">
-                                    €  {{ piatto.prezzo }}
+                                    €  
                                   </p>
                                 </span>
                               </div>
                               <div class="d-flex justify-content-between">
                                 <span>
-                                  <button @click="removeToCart(piatto)" class="remove-btn">
+                                  <button class="remove-btn">
                                       -
                                   </button>
                                 </span>
                                 <span>
                                   <p class="card-text">
-                                    {{ piatto.descrizione }}
                                   </p>
                                 </span>
                                 <span>
-                                  <button @click="addToCart(piatto)" class="add-btn">
+                                  <button class="add-btn">
                                       +
                                   </button>
                                 </span>
@@ -139,7 +102,7 @@ data() {
                   <div class="card-body">
                     <h5 class="card-title h5-cart">Devi pagare un totale di: </h5>
                     <p class="card-text tot-pay">
-                      € {{ totale }}
+                      € 
                     </p>
                     <a href="/carrello" class="card-link text-decoration-none">
                       <button class="btn payment-btn d-flex">
