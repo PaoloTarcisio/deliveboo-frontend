@@ -7,6 +7,7 @@ import AppModal from '../components/AppModal.vue';
 export default {
     data() {
         return {
+            totalItem: 0,
             restaurant: { plates: [] },
             cart: [],
             showModal: false,
@@ -42,6 +43,7 @@ export default {
                 });
             }
             this.updateLocalStorage();
+            this.calculateTotalItem();
         },
         confirmModal() {
             this.cart = [];
@@ -62,10 +64,12 @@ export default {
                 this.removeFromCart(plateId);
             }
             this.updateLocalStorage();
+            this.calculateTotalItem();
         },
         removeFromCart(plateId) {
             this.cart = this.cart.filter(item => item.plateId !== plateId);
             this.updateLocalStorage();
+            this.calculateTotalItem();
         },
         getQuantity(plateId) {
             const item = this.cart.find(item => item.plateId === plateId);
@@ -83,11 +87,18 @@ export default {
         loadFromLocalStorage() {
             const storedCart = localStorage.getItem('cart');
             this.cart = storedCart ? JSON.parse(storedCart) : [];
-        }
+            this.calculateTotalItem();
+        },
+        calculateTotalItem() {
+            this.totalItem = this.cart.reduce((total, item) => total + item.quantity, 0);
+            localStorage.setItem('totalItem', this.totalItem);
+        },
     },
     created() {
         this.fetchRestaurantData();
         this.loadFromLocalStorage();
+        const storedTotalItem = localStorage.getItem('totalItem');
+        this.totalItem = storedTotalItem ? parseInt(storedTotalItem) : 0;
     }
 }
 </script>
@@ -96,6 +107,12 @@ export default {
 
     <app-modal :show="showModal" @update:show="showModal = $event" @confirm="confirmModal"/>
 
+    <div v-if="totalItem > 0" class="badge-counter">
+            <div class="pop-up">
+                {{ totalItem }}
+            </div>
+        </div>
+        
     <div class="my-container">
     
         <!-- INFORMAZIONI RISTORANTE -->
