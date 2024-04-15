@@ -14,7 +14,7 @@ export default {
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand me-auto" href="#">Logo</a>
+            <a class="navbar-brand me-auto" href="/"><img src="/src/assets/img/deliveboo.png" alt="logo" class="w-75"></a>
             
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
