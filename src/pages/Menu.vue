@@ -1,21 +1,35 @@
 <script>
 import axios from 'axios';
 import { store } from '../components/store';
+import AppModal from '../components/AppModal.vue';
+
 
 export default {
     data() {
         return {
             restaurant: { plates: [] },
             cart: [],
+            showModal: false,
+            pendingPlate: null,
+            pendingQuantity: 0
         };
+    },
+    components: {
+        AppModal
     },
     methods: {
         addToCart(plate, quantity = 1) {
-            if (this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id) {
-                alert("Non puoi aggiungere piatti da ristoranti diversi nel carrello!");
-                return;
+            const isNewRestaurant = this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id;
+            if (isNewRestaurant) {
+                this.pendingPlate = plate;
+                this.pendingQuantity = quantity;
+                this.showModal = true;
+            } else {
+                this.processAddToCart(plate, quantity);
             }
-            let cartItem = this.cart.find(item => item.plateId === plate.id);
+        },
+        processAddToCart(plate, quantity) {
+            const cartItem = this.cart.find(item => item.plateId === plate.id);
             if (cartItem) {
                 cartItem.quantity += quantity;
             } else {
@@ -29,8 +43,19 @@ export default {
             }
             this.updateLocalStorage();
         },
+        confirmModal() {
+            this.cart = [];
+            this.processAddToCart(this.pendingPlate, this.pendingQuantity);
+            this.showModal = false;
+            this.pendingPlate = null;
+            this.pendingQuantity = 0;
+        },
+        updateLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            console.log('Carrello aggiornato:', JSON.stringify(this.cart));
+        },
         decreaseQuantity(plateId) {
-            let cartItem = this.cart.find(item => item.plateId === plateId);
+            const cartItem = this.cart.find(item => item.plateId === plateId);
             if (cartItem && cartItem.quantity > 1) {
                 cartItem.quantity -= 1;
             } else {
@@ -43,21 +68,17 @@ export default {
             this.updateLocalStorage();
         },
         getQuantity(plateId) {
-            let item = this.cart.find(item => item.plateId === plateId);
+            const item = this.cart.find(item => item.plateId === plateId);
             return item ? item.quantity : 0;
-        },
-        updateLocalStorage() {
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-            console.log('Carrello salvato nel localStorage:', JSON.stringify(this.cart));
         },
         fetchRestaurantData() {
             axios.get(`http://127.0.0.1:8000/api/restaurants/${this.$route.params.id}`)
-            .then(response => {
-                this.restaurant = response.data.results;
-            })
-            .catch(error => {
-                console.error('Error fetching restaurant data:', error);
-            });
+                .then(response => {
+                    this.restaurant = response.data.results;
+                })
+                .catch(error => {
+                    console.error('Error fetching restaurant data:', error);
+                });
         },
         loadFromLocalStorage() {
             const storedCart = localStorage.getItem('cart');
@@ -72,6 +93,8 @@ export default {
 </script>
 
 <template>
+
+    <app-modal :show="showModal" @update:show="showModal = $event" @confirm="confirmModal"/>
 
     <div class="my-container">
     
@@ -124,6 +147,7 @@ export default {
                             <div class="card-plate-name-price">
                                 <div class="card-plate-name">
                                     <h4 class="text-center">
+                                        
                                         {{ plate.name }}
                                     </h4>
                                 </div>
@@ -150,14 +174,24 @@ export default {
                                   
                             <div class="card-plate-order pt-3">
                                 <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
-                                <div v-if="getQuantity(plate.id)> 0">
+                                <div v-if="getQuantity(plate.id) > 0">
+                                    <!-- bottone + -->
                                     <button class="fa-solid fa-plus" @click="addToCart(plate, 1)"></button>
-                                    <span>{{ getQuantity(plate.id) }}</span> <!-- Mostra la quantità -->
+
+                                    <!-- Mostra la quantità -->
+                                    <span>{{ getQuantity(plate.id) }}</span> 
+
+                                    <!-- bottone - -->
                                     <button class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></button>
-                                    <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> <!-- Bottone per rimuovere tutto -->
+
+                                    <!-- Bottone per rimuovere tutto -->
+                                    <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> 
                                 </div>
                                 <div v-else>
-                                    <button @click="addToCart(plate, 1)"><i class="fa-solid fa-cart-plus"></i></button>
+                                    <!-- bottone carrellino-->
+                                    <button class="btn btn-success" @click="addToCart(plate, 1)">
+                                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                    </button>
                                 </div>
                             </div>
                         </div>
