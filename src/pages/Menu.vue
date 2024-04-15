@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import { store } from '../components/store';
+import AppModal from '../components/AppModal.vue';
 
 
 export default {
@@ -9,21 +10,26 @@ export default {
             restaurant: { plates: [] },
             cart: [],
             showModal: false,
+            pendingPlate: null,
+            pendingQuantity: 0
         };
+    },
+    components: {
+        AppModal
     },
     methods: {
         addToCart(plate, quantity = 1) {
-        // Verifica se il piatto appartiene a un ristorante diverso da quelli già nel carrello
-        const isNewRestaurant = this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id;
-
-        // Se è il primo piatto di un ristorante diverso, mostra la modale
-        if (isNewRestaurant) {
-            this.showModal = true;
-        }
-
-        // Aggiungi il piatto al carrello solo se la modale non è già stata mostrata
-        if (!this.showModal) {
-            let cartItem = this.cart.find(item => item.plateId === plate.id);
+            const isNewRestaurant = this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id;
+            if (isNewRestaurant) {
+                this.pendingPlate = plate;
+                this.pendingQuantity = quantity;
+                this.showModal = true;
+            } else {
+                this.processAddToCart(plate, quantity);
+            }
+        },
+        processAddToCart(plate, quantity) {
+            const cartItem = this.cart.find(item => item.plateId === plate.id);
             if (cartItem) {
                 cartItem.quantity += quantity;
             } else {
@@ -34,12 +40,22 @@ export default {
                     price: plate.price,
                     quantity: quantity
                 });
-        }
+            }
             this.updateLocalStorage();
-        }
-    },
+        },
+        confirmModal() {
+            this.cart = [];
+            this.processAddToCart(this.pendingPlate, this.pendingQuantity);
+            this.showModal = false;
+            this.pendingPlate = null;
+            this.pendingQuantity = 0;
+        },
+        updateLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            console.log('Carrello aggiornato:', JSON.stringify(this.cart));
+        },
         decreaseQuantity(plateId) {
-            let cartItem = this.cart.find(item => item.plateId === plateId);
+            const cartItem = this.cart.find(item => item.plateId === plateId);
             if (cartItem && cartItem.quantity > 1) {
                 cartItem.quantity -= 1;
             } else {
@@ -52,21 +68,17 @@ export default {
             this.updateLocalStorage();
         },
         getQuantity(plateId) {
-            let item = this.cart.find(item => item.plateId === plateId);
+            const item = this.cart.find(item => item.plateId === plateId);
             return item ? item.quantity : 0;
-        },
-        updateLocalStorage() {
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-            console.log('Carrello salvato nel localStorage:', JSON.stringify(this.cart));
         },
         fetchRestaurantData() {
             axios.get(`http://127.0.0.1:8000/api/restaurants/${this.$route.params.id}`)
-            .then(response => {
-                this.restaurant = response.data.results;
-            })
-            .catch(error => {
-                console.error('Error fetching restaurant data:', error);
-            });
+                .then(response => {
+                    this.restaurant = response.data.results;
+                })
+                .catch(error => {
+                    console.error('Error fetching restaurant data:', error);
+                });
         },
         loadFromLocalStorage() {
             const storedCart = localStorage.getItem('cart');
@@ -76,38 +88,13 @@ export default {
     created() {
         this.fetchRestaurantData();
         this.loadFromLocalStorage();
-
     }
 }
 </script>
 
 <template>
 
-
-        <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button> -->
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false" v-if="showModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
+    <app-modal :show="showModal" @update:show="showModal = $event" @confirm="confirmModal"/>
 
     <div class="my-container">
     
@@ -189,7 +176,7 @@ export default {
                                 <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
                                 <div v-if="getQuantity(plate.id) > 0">
                                     <!-- bottone + -->
-                                    <button class="fa-solid fa-plus" @click="addToCart(plate, 1)" ></button>
+                                    <button class="fa-solid fa-plus" @click="addToCart(plate, 1)"></button>
 
                                     <!-- Mostra la quantità -->
                                     <span>{{ getQuantity(plate.id) }}</span> 
@@ -201,11 +188,10 @@ export default {
                                     <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> 
                                 </div>
                                 <div v-else>
-                                    <!-- bottone carrellino -->
-                                    <button @click="addToCart(plate, 1)" 
-                                    :data-bs-toggle="showModal ? 'modal' : ''" 
-                                    :data-bs-target="showModal ? '#exampleModal' : ''"><i class="fa-solid fa-cart-plus"></i>
-                                </button>
+                                    <!-- bottone carrellino-->
+                                    <button class="btn btn-success" @click="addToCart(plate, 1)">
+                                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                    </button>
                                 </div>
                             </div>
                         </div>
