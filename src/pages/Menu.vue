@@ -2,83 +2,69 @@
 import axios from 'axios';
 import { store } from '../components/store';
 
-
 export default {
     data() {
         return {
-        restaurant: { plates: [] },
-        cart: [],
-    };
-},
-    methods: {
-
-    addToCart(plate, quantity = 1) {
-
-        // Controlla se il carrello ha già elementi e se il ristorante corrisponde
-        if (this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id) {
-        alert("Non puoi aggiungere piatti da ristoranti diversi nel carrello!");
-        return;
-        }
-    
-        let cartItem = this.cart.find(item => item.plateId === plate.id);
-        if (cartItem) {
-            cartItem.quantity += quantity;
-            } else {
-        this.cart.push({
-            plateId: plate.id,
-            restaurantId: plate.restaurant_id,  // Assicurati di aggiungere anche l'ID del ristorante
-            name: plate.name,
-            price: plate.price,
-            quantity: quantity
-            });
-        }
-        this.updateLocalStorage();
+            restaurant: { plates: [] },
+            cart: [],
+        };
     },
-
-    decreaseQuantity(plateId) {
-        const cartItem = this.cart.find(item => item.plateId === plateId);
-        if (cartItem) {
-            if (cartItem.quantity > 1) {
-                cartItem.quantity -= 1;
-                } else {
-                // Se la quantità è 1, rimuovi l'articolo dal carrello
-            this.removeFromCart(plateId);
+    methods: {
+        addToCart(plate, quantity = 1) {
+            if (this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id) {
+                alert("Non puoi aggiungere piatti da ristoranti diversi nel carrello!");
+                return;
+            }
+            let cartItem = this.cart.find(item => item.plateId === plate.id);
+            if (cartItem) {
+                cartItem.quantity += quantity;
+            } else {
+                this.cart.push({
+                    plateId: plate.id,
+                    restaurantId: plate.restaurant_id,
+                    name: plate.name,
+                    price: plate.price,
+                    quantity: quantity
+                });
             }
             this.updateLocalStorage();
-        }
-    },
-
-    removeFromCart(plateId) {
-        const index = this.cart.findIndex(item => item.plateId === plateId);
-        if (index > -1) {
-            this.cart.splice(index, 1);
+        },
+        decreaseQuantity(plateId) {
+            let cartItem = this.cart.find(item => item.plateId === plateId);
+            if (cartItem && cartItem.quantity > 1) {
+                cartItem.quantity -= 1;
+            } else {
+                this.removeFromCart(plateId);
+            }
             this.updateLocalStorage();
+        },
+        removeFromCart(plateId) {
+            this.cart = this.cart.filter(item => item.plateId !== plateId);
+            this.updateLocalStorage();
+        },
+        getQuantity(plateId) {
+            let item = this.cart.find(item => item.plateId === plateId);
+            return item ? item.quantity : 0;
+        },
+        updateLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            console.log('Carrello salvato nel localStorage:', JSON.stringify(this.cart));
+        },
+        fetchRestaurantData() {
+            axios.get(`http://127.0.0.1:8000/api/restaurants/${this.$route.params.id}`)
+            .then(response => {
+                this.restaurant = response.data.results;
+            })
+            .catch(error => {
+                console.error('Error fetching restaurant data:', error);
+            });
+        },
+        loadFromLocalStorage() {
+            const storedCart = localStorage.getItem('cart');
+            this.cart = storedCart ? JSON.parse(storedCart) : [];
         }
     },
-
-    updateLocalStorage() {
-        localStorage.setItem('cart', JSON.stringify(this.cart));
-        console.log('Carrello salvato nel localStorage:', JSON.stringify(this.cart));
-    },
-
-    fetchRestaurantData() {
-    axios.get(`http://127.0.0.1:8000/api/restaurants/${this.$route.params.id}`)
-        .then(response => {
-        this.restaurant = response.data.results;
-        })
-        .catch(error => {
-        console.error('Error fetching restaurant data:', error);
-        });
-    },
-
-    loadFromLocalStorage() {
-        const storedCart = localStorage.getItem('cart');
-        this.cart = storedCart ? JSON.parse(storedCart) : [];
-    }
-},
-
-
-    created () {
+    created() {
         this.fetchRestaurantData();
         this.loadFromLocalStorage();
     }
@@ -162,18 +148,16 @@ export default {
                         </div>
                     </div>
 
-                    <div class="">
-                        <div>
-                            <div>
-                                
-                            </div>
+                    <div>
+                        <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
+                        <div v-if="getQuantity(plate.id) > 0">
                             <i class="fa-solid fa-plus" @click="addToCart(plate, 1)"></i>
-
+                            <span>{{ getQuantity(plate.id) }}</span> <!-- Mostra la quantità -->
                             <i class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></i>
+                            <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> <!-- Bottone per rimuovere tutto -->
                         </div>
-                        <div>
-
-                            <i class="fa-solid fa-cart-plus card-plate-add" @click="addToCart(plate, 1)"></i>
+                        <div v-else>
+                            <button @click="addToCart(plate, 1)">Aggiungi al carrello</button>
                         </div>
                     </div>
 
