@@ -112,7 +112,7 @@ export default {
                 {{ totalItem }}
             </div>
         </div>
-        
+
     <div class="my-container">
     
         <!-- INFORMAZIONI RISTORANTE -->
@@ -228,6 +228,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/scss/partials/variables.scss";
+
+@import "../assets/scss/partials/menu.scss";
 
 
 .my-container{
