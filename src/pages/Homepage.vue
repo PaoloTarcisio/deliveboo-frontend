@@ -18,22 +18,7 @@ export default {
         clearMessage() {
             this.paymentSuccess = false;
         },
-        /*
-        getRestaurantsByType(id, page){
-            axios
-                .get('http://127.0.0.1:8000/api/restaurants/types/' + id, {
-                    params: {
-                        page: page
-                    }
-                })
-                .then(response => {
-                    this.restaurants = response.data.results.data;
-                    this.currentPageFiltered = response.data.results.current_page;
-                    this.lastPageFiltered = response.data.results.last_page;
-                    console.log(response);
-                });
-        },
-        */
+        
         selectType(typeId) {
             const index = this.selectedTypes.indexOf(typeId);
             if (index === -1) {
@@ -53,25 +38,8 @@ export default {
         emptySelectedType(){
             this.selectedTypes = [];
         }
-        /*
-        selectType(typeId){
-
-            // selectedType corrisponde al tipo cliccato? Se no... imposta il nuovo valore... se si mettilo a stringa vuota
-            this.selectedType = this.selectedType !== typeId ? typeId : '';
+    },
     
-            // Fai partire la chiamata API per i ristoranti filtrati
-            if (this.selectedType) {
-                this.getRestaurantsByType(typeId, this.currentPageFiltered);
-            } else {
-                // Altrimenti parte la chiamata api per tutti i ristoranti
-                this.getRestaurants(this.currentPage);
-            }
-        },
-        */
-    },
-    mounted() {
-
-    },
     created () {
         
         this.getRestaurants(this.currentPage);
@@ -96,19 +64,6 @@ export default {
             )
             );
         },
-
-        /*
-        filteredRestaurants() {
-            // Se non ci sono tipi selezionati, mostra tutti i ristoranti
-            if (!this.selectedTypes.length) {
-            return this.restaurants;
-            }
-            // Altrimenti, filtra l'array dei ristoranti
-            return this.restaurants.filter(restaurant =>
-            restaurant.types.some(type => this.selectedTypes.includes(type.id))
-            );
-        },
-        */
     }
 };
 </script>

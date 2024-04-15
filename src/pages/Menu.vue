@@ -5,80 +5,82 @@ import { store } from '../components/store';
 
 export default {
     data() {
-    return {
-        piatti: [],
-        prezzi: [],
-        piattiDaCart: '',
-        store,
-        restaurant: [],
-        Cart :[],
-        };
-    },
+        return {
+        restaurant: { plates: [] },
+        cart: [],
+    };
+},
     methods: {
-        // Verifica se la stringa è vuota o non definita
-        isValidString(str) {
-            return str && typeof str === 'string' && str.trim() !== '';
-        },
-        AddToCart(name, price) {
 
-            // Pusho nome/prezzo
-            this.piatti.push(name);
-            this.prezzi.push(price);
+    addToCart(plate, quantity = 1) {
 
-            // Invio al carrello
-            localStorage.setItem('piattiDaMenu', this.piatti);
-            localStorage.setItem('prezziDaMenu', this.prezzi);       
-        },
-        RemoveFromCart(name) {
-
-            // name = plate.name;
-            // if (store.platesNames.includes(name)) {
-
-            //     this.store.platesNames.splice(this.name)
-
-                // console.log(store.platesNames)
-            }
-            // else {
-
-            // }
-        // }
+        // Controlla se il carrello ha già elementi e se il ristorante corrisponde
+        if (this.cart.length > 0 && this.cart[0].restaurantId !== plate.restaurant_id) {
+        alert("Non puoi aggiungere piatti da ristoranti diversi nel carrello!");
+        return;
+        }
+    
+        let cartItem = this.cart.find(item => item.plateId === plate.id);
+        if (cartItem) {
+            cartItem.quantity += quantity;
+            } else {
+        this.cart.push({
+            plateId: plate.id,
+            restaurantId: plate.restaurant_id,  // Assicurati di aggiungere anche l'ID del ristorante
+            name: plate.name,
+            price: plate.price,
+            quantity: quantity
+            });
+        }
+        this.updateLocalStorage();
     },
-    created () {
-        axios
-        .get('http://127.0.0.1:8000/api/restaurants/' + this.$route.params.id)
+
+    decreaseQuantity(plateId) {
+        const cartItem = this.cart.find(item => item.plateId === plateId);
+        if (cartItem) {
+            if (cartItem.quantity > 1) {
+                cartItem.quantity -= 1;
+                } else {
+                // Se la quantità è 1, rimuovi l'articolo dal carrello
+            this.removeFromCart(plateId);
+            }
+            this.updateLocalStorage();
+        }
+    },
+
+    removeFromCart(plateId) {
+        const index = this.cart.findIndex(item => item.plateId === plateId);
+        if (index > -1) {
+            this.cart.splice(index, 1);
+            this.updateLocalStorage();
+        }
+    },
+
+    updateLocalStorage() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+        console.log('Carrello salvato nel localStorage:', JSON.stringify(this.cart));
+    },
+
+    fetchRestaurantData() {
+    axios.get(`http://127.0.0.1:8000/api/restaurants/${this.$route.params.id}`)
         .then(response => {
-            this.restaurant = response.data.results;
-            this.plates = response.data.results.plates;
-            // console.log(this.restaurant);
-            // console.log(this.plates);
-
+        this.restaurant = response.data.results;
+        })
+        .catch(error => {
+        console.error('Error fetching restaurant data:', error);
         });
+    },
 
-        // Setto il contenuto di quello che arriva da carrello
-        let piattiDaCart = localStorage.getItem('piattiDaCart');
-        let prezziDaCart = localStorage.getItem('prezziDaCart');
+    loadFromLocalStorage() {
+        const storedCart = localStorage.getItem('cart');
+        this.cart = storedCart ? JSON.parse(storedCart) : [];
+    }
+},
 
-        /*
-            Se il contenuto c'è e non è '',
-            setto i piatti/prezzi,
-            altrimenti li setto a vuoti e li riinvio al carrello
-        */
-        if (piattiDaCart && piattiDaCart !== '') {
-            this.piatti = piattiDaCart.split(',');
-        } else {
-            this.piatti = [];
-            localStorage.setItem("piattiDaMenu", this.piatti);
-        }
 
-        if (prezziDaCart && prezziDaCart !== '') {
-            this.prezzi = prezziDaCart.split(',');
-        } else {
-            this.prezzi = [];
-            localStorage.setItem("prezziDaMenu", this.prezzi);
-        }
-
-        console.log(this.piatti);
-        console.log(this.prezzi);
+    created () {
+        this.fetchRestaurantData();
+        this.loadFromLocalStorage();
     }
 }
 </script>
@@ -161,17 +163,17 @@ export default {
                     </div>
 
                     <div class="">
-                        <div v-if="store.platesNames.includes(plate.name)">
+                        <div>
                             <div>
                                 
                             </div>
-                            <i class="fa-solid fa-plus" @click="AddToCart(plate.name, plate.price)"></i>
+                            <i class="fa-solid fa-plus" @click="addToCart(plate, 1)"></i>
 
-                            <i class="fa-solid fa-minus" @click="RemoveFromCart(plate.name)"></i>
+                            <i class="fa-solid fa-minus" @click="removeFromCart(plate.name)"></i>
                         </div>
-                        <div v-else>
+                        <div>
 
-                            <i class="fa-solid fa-cart-plus card-plate-add" @click="AddToCart(plate.name, plate.price)"></i>
+                            <i class="fa-solid fa-cart-plus card-plate-add" @click="addToCart(plate.name)"></i>
                         </div>
                     </div>
 
