@@ -112,56 +112,63 @@ export default {
                 Il nostro menù:
             </h2>
 
-            <!-- MENU RISTORANTE 2 -->
-            <div class="row card-plate-row my-3">
-                <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3 px-5 py-3"  v-for="plate in restaurant.plates">
-                    <div class="img-card-plate m-3">
-                        <img :src="plate.image" alt="" class="info-restaurant">
-                    </div>
+            <div v-if="restaurant.plates.length > 0">
+                            <!-- MENU RISTORANTE 2 -->
+                <div class="row card-plate-row my-3">
+                    <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3 px-5 py-3"  v-for="plate in restaurant.plates">
+                        <div class="img-card-plate m-3">
+                            <img :src="plate.image" alt="" class="info-restaurant">
+                        </div>
 
-                    <div class="card-plate-content">
-                        <div class="card-plate-name-price">
-                            <div class="card-plate-name">
-                                <h4 class="text-center">
-                                    {{ plate.name }}
-                                </h4>
+                        <div class="card-plate-content">
+                            <div class="card-plate-name-price">
+                                <div class="card-plate-name">
+                                    <h4 class="text-center">
+                                        {{ plate.name }}
+                                    </h4>
+                                </div>
+            
+                                <div class="card-plate-price">
+                                    <h5>
+                                        {{ plate.price }} €
+                                    </h5>
+                                </div>
                             </div>
         
-                            <div class="card-plate-price">
-                                <h5>
-                                    {{ plate.price }} €
-                                </h5>
+                            <div class="card-plate-description-ingredients">
+                                <div class="card-plate-description mb-4">
+                                    {{ plate.description }}
+                                </div>
+            
+                                <div class="card-plate-ingredients">
+                                    <span class="ingredienti">
+                                        Ingredienti:
+                                    </span>
+                                    {{ plate.ingredients }}
+                                </div>
                             </div>
                         </div>
-    
-                        <div class="card-plate-description-ingredients">
-                            <div class="card-plate-description mb-4">
-                                {{ plate.description }}
-                            </div>
-        
-                            <div class="card-plate-ingredients">
-                                <span class="ingredienti">
-                                    Ingredienti:
-                                </span>
-                                {{ plate.ingredients }}
-                            </div>
-                        </div>
-                    </div>
 
-                    <div>
-                        <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
-                        <div v-if="getQuantity(plate.id) > 0">
-                            <i class="fa-solid fa-plus" @click="addToCart(plate, 1)"></i>
-                            <span>{{ getQuantity(plate.id) }}</span> <!-- Mostra la quantità -->
-                            <i class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></i>
-                            <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> <!-- Bottone per rimuovere tutto -->
+                        <div>
+                            <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
+                            <div v-if="getQuantity(plate.id) > 0">
+                                <i class="fa-solid fa-plus" @click="addToCart(plate, 1)"></i>
+                                <span>{{ getQuantity(plate.id) }}</span> <!-- Mostra la quantità -->
+                                <i class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></i>
+                                <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> <!-- Bottone per rimuovere tutto -->
+                            </div>
+                            <div v-else>
+                                <button @click="addToCart(plate, 1)">Aggiungi al carrello</button>
+                            </div>
                         </div>
-                        <div v-else>
-                            <button @click="addToCart(plate, 1)">Aggiungi al carrello</button>
-                        </div>
-                    </div>
 
+                    </div>
                 </div>
+
+            </div>
+
+            <div v-else>
+                <h3 class="text-center">Non ci sono piatti disponibili nel menù.</h3>
             </div>
         </section>
     </div>
