@@ -176,15 +176,15 @@ export default {
             padding: 10px 15px;
             border: 2px solid $primary;
             border-radius: 30px;
-            color: $primary;
-            background-color: $tertiary;
+            color: $secondary;
+            background-color: $primary;
         }
 
         .types:hover, .types.active
         {
-            color: $secondary;
+            color: $primary;
             border: 2px solid $primary;
-            background-color: $primary;
+            background-color: $tertiary;
             
         }
 
