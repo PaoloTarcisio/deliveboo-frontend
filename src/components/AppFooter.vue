@@ -89,10 +89,16 @@ export default {
                     Porta Deliveroo con te
                 </h5>
                 <button class="btn btn-primary btn-footer">
-                    Scarica google
+                    <div class="logo-footer-container">
+                        <img src="../assets/img/googlePlay.png" alt="#">
+                        Scarica da google
+                    </div>
                 </button>
                 <button class="btn btn-primary btn-footer">
-                    Scarica mac
+                    <div class="logo-footer-container">
+                        <img src="../assets/img/app-store.png" alt="#">
+                        Scarica da apple 
+                    </div>
                 </button>
             </div>
 
@@ -120,4 +126,5 @@ export default {
 
 <style lang="scss" scoped>
     @import "../assets/scss/partials/footer.scss";
+    
 </style>
