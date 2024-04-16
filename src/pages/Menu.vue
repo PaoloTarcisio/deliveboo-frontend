@@ -156,8 +156,8 @@ export default {
         </section>
 
         <!-- MENU RISTORANTE 1-->
-        <section class="section-menu">
-            <h2 class="my-4 text-center">
+        <section class="section-menu py-3">
+            <h2 class="py-4 text-center">
                 Il nostro menù:
             </h2>
 
@@ -223,13 +223,11 @@ export default {
                                             <button class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></button>
         
                                             <!-- Bottone per rimuovere tutto -->
-                                            <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> 
+                                            <button class="fa-solid fa-trash-can" @click="removeFromCart(plate.id)"></button> 
                                         </div>
                                         <div v-else>
                                             <!-- bottone carrellino-->
-                                            <button class="btn btn-success" @click="addToCart(plate, 1)">
-                                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                                            </button>
+                                            <button class="fa-solid fa-cart-plus" @click="addToCart(plate, 1)"></button>
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +241,7 @@ export default {
 
             </div>
 
-            <div v-else class="p-3">
+            <div v-else class="else-category p-3">
                 <h3 class="text-center">Non ci sono piatti disponibili nel menù.</h3>
                 <img src="/src/assets/img/dishes-not-found.png" alt="dishes-not-found" class="rounded-3">
             </div>
@@ -274,6 +272,7 @@ export default {
             {
                 background-color: $primary;
                 color: $secondary;
+                border-radius: 20px;
 
                 >*
                 {
@@ -284,6 +283,9 @@ export default {
                     img
                     {
                         width: 100%;
+                        border-top-left-radius: 20px;
+                        border-bottom-left-radius: 20px;
+
                     }
                 }
 
@@ -291,6 +293,12 @@ export default {
                 {
                     flex-grow: 1;
                     text-align: center;
+                    font-size: 1.2rem;
+
+                    >*
+                    {
+                        padding-bottom: 1.5rem;
+                    }
 
                     #Piva
                     {
@@ -312,6 +320,12 @@ export default {
     .section-menu
     {
         text-align: center;
+        background-color: $secondary;
+
+        h2
+        {
+            color: $primary;
+        }
 
 
         .card-plate-row
@@ -324,7 +338,7 @@ export default {
                 margin: 0 auto;
                 background-color: $primary;
                 color: $secondary;
-                border-radius: 30px;
+                border-radius: 20px;
                 
 
                 .img-card-plate
@@ -354,6 +368,7 @@ export default {
                     {
                         font-size: 1.1rem;
                         padding-left: 3.3rem;
+                        padding-bottom: 1.5rem;
                         .card-plate-ingredients
                         {
 
@@ -369,9 +384,6 @@ export default {
                 .card-plate-order
                 {
                     text-align: center;
-
-                    
-
                     align-self: flex-end;
                     color: $secondary;
                     
@@ -385,19 +397,44 @@ export default {
                     {
                         background-color: transparent;
                         color: $secondary;
-                        border: 2px solid $secondary;
-                        border-radius: 2rem;
-                        padding: 12px 12px;
-                    
-                    }
+                        padding: 14px 14px;
 
+                        
+                    }
+                    
                     button:hover {
                         background-color: $secondary;
                         color: $primary;
                     }
-
+                    
                     span {
-                        padding: 10px;
+                        padding: 10px 14px;
+                        border-top: 2px solid $secondary;
+                        border-bottom: 2px solid $secondary;
+                    }
+
+                    .fa-plus{
+                        border: 2px solid $secondary;
+                        border-top-left-radius: 2rem;
+                        border-bottom-left-radius: 2rem;
+                    }
+
+                    .fa-minus{
+                        border: 2px solid $secondary;
+                        border-top-right-radius: 2rem;
+                        border-bottom-right-radius: 2rem;
+                    }
+
+                    .fa-trash-can
+                    {
+                        border: 2px solid $secondary;
+                        border-radius: 2rem;
+                        margin-left: 2rem;
+                    }
+
+                    .fa-cart-plus{
+                        border: 2px solid $secondary;
+                        border-radius: 2rem;
                     }
                 }
             }
