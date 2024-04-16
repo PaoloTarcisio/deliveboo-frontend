@@ -139,28 +139,26 @@ export default {
                 </h1>
             </div>   
 
-            <div class="thanks-bg">
-                        
-                    </div>
+            <div class="thanks-bg"></div>
 
             <div class="cart-resume row">
             
-                <div class="cart-resume-left order-sm-last order-md-first col-sm-12 col-md-5 col-12 text-end">
-                    <div class="card-body braintree-container text-center">
+                <div class="cart-resume-left order-sm-last order-md-first col-md-6">
+                    <div class="card-body braintree-container">
 
                         <form @submit.prevent="submitPayment">
                         
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nome e Cognome</label>
+                                <label for="name" class="form-label">Nome e Cognome <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="name" v-model="orderData.name" placeholder="Inserisci il tuo nome e cognome" required>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-5">
-                                    <label for="phone" class="form-label">Telefono</label>
+                                    <label for="phone" class="form-label">Telefono <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="phone" v-model="orderData.phone" placeholder="Inserisci il tuo telefono" required>
                                 </div>
                                 <div class="col-7">
-                                    <label for="address" class="form-label">Indirizzo</label>
+                                    <label for="address" class="form-label">Indirizzo <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="address" v-model="orderData.address" placeholder="Inserisci il tuo indirizzo" required>
                                 </div>
                             </div>
@@ -170,14 +168,14 @@ export default {
                                 <textarea class="form-control" id="notes" v-model="orderData.notes" placeholder="Note aggiuntive" rows="3"></textarea>
                             </div>
                             <div id="dropin-container"></div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-braintree">Procedi con l'ordine</button>
-                            </div>
+
+                            <button type="submit" class="btn btn-braintree">Procedi con l'ordine</button>
+ 
                         </form>
                     </div>
                 </div>
 
-                <div class="cart-resume-right col-md-7 col-sm-0 col-0">
+                <div class="cart-resume-right  order-sm-first order-md-last col-md-6">
                     <div class="cart-element-right" v-for="item in cart" :key="item.plateId">
                         <div class="d-flex justify-content-evenly my-3">
 

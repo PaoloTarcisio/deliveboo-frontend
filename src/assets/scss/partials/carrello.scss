@@ -7,18 +7,18 @@ h1{
 }
 .checkout-page{
     background-color: $tertiary;
-    padding: 100px;
+    padding: 50px;
     font-weight: bold;
 }
 .checkout-page > div{
     background-color:$tertiary;
 }
 .cart-resume{
-    max-height: 400px;
-    min-height: 400px;
-    overflow-y: scroll;
-    padding-left: 60px;
-    padding-right: 60px;
+    max-height: 800px;
+    //min-height: 400px;
+    overflow-y: auto;
+    //padding-left: 60px;
+    //padding-right: 60px;
 }
 /*.cart-resume > div {
     background-color: $primary;
@@ -59,7 +59,7 @@ h1{
     animation-duration: 5s;
 }
 .thanks-bg{
-    min-height: 400px;
+    min-height: 300px;
     background-image: url("../assets/img/thanks.png");
     background-position:center;
     background-size:contain;
@@ -109,17 +109,34 @@ h1{
         transition: 3s;
       }
   }
-.braintree-container {
+
+  .braintree-container {
     background-color: $tertiary;
     color: $primary;
     border-radius: 20px;
     font-size: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
+
+.braintree-container form {
+    width: 100%;
+    .form-control {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
 .btn-braintree {
     background-color: $secondary;
     color: $primary;
     font-weight: bold;
 }
+
 .btn-braintree:hover {
     animation: loop;
     animation-iteration-count: infinite;
