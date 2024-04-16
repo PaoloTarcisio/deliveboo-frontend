@@ -136,11 +136,10 @@ export default {
                 <button @click="decreaseQuantity(item.plateId)">-</button>
                 <button @click="addToCart(item, 1)">+</button>
                 <button @click="removeFromCart(item.plateId)">Rimuovi</button>
-                <h2>{{ item.quantity }}</h2>
             </div>      
 
-            <div class="bg-danger">
-                <button @click="svuotaCarrello">Svuota Carrello</button>
+            <div class="mt-3">
+                <button class="btn btn-danger" @click="svuotaCarrello">Svuota Carrello</button>
             </div>
 
             <h3>Totale: {{ calculateTotal() }} €</h3>
