@@ -119,26 +119,35 @@ export default {
         
         <section class="section-restourant-detail py-5">
             <div class="restourant-detail ">
-
-                <div class="row">
-                    <div class="col-lg-4 col-md-5 col-sm-8" >
-                        <img :src="restaurant.image" alt="" class="info-restaurant">
-                    </div>
-                    <div class="col-lg-1 col-md-6 col-sm-0"></div>
-                    <div class="col-lg-7 col-md-5 col-sm-8 info-restaurant p-3">
-                        <h2 class="text-center p-3">
-                            {{ restaurant.activity_name }}
-                        </h2>
-                        <p>
-                            {{ restaurant.address }}
-                        </p>
-                        <p>
-                            {{ restaurant.description }}
-                        </p>
-                        <div>
-                            <div>
-                                <h6>P.iva:</h6>
-                                {{ restaurant.VAT_number }}
+                <div class="card mx-5">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12 col-sm-12">
+                            <div class="restourant-image">
+                                <img :src="restaurant.image" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 flex-grow-1 py-3">
+                            <div class="restourant-text">
+                                <div class="restourant-name">
+                                    <h2>
+                                        {{ restaurant.activity_name }}
+                                    </h2>
+                                </div>
+                                <div class="restourant-address">
+                                    <p>
+                                        {{ restaurant.address }}
+                                    </p>
+                                </div>
+                                <div class="restourant-description">
+                                    <p>
+                                        {{ restaurant.description }}
+                                    </p>
+                                </div>
+                                <div class="restourant-vat">
+                                    <p>
+                                        <span id="Piva">P.Iva:  </span>{{ restaurant.VAT_number }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -249,37 +258,53 @@ export default {
 
 
 .my-container{
-    margin-top: 150px;
+
 
 
     .section-restourant-detail
     {
-        background: $tertiary;
-        
-        
-        .restourant-detail
+        background-color: $tertiary;
+
+        .card
         {
-            width: 80%;
-            margin: 0 auto;
+            border: none;
+
 
             .row
             {
-                justify-content: space-evenly;
+                background-color: $primary;
+                color: $secondary;
 
-                .info-restaurant{
-                    background-color: $primary;
-                    color: $secondary;
-                    border-radius: 10px;
+                >*
+                {
+                    padding: 0;
                 }
-                
-                img {
-                    width: 300px;
-                    height: 300px;
+                .restourant-image
+                {
+                    img
+                    {
+                        width: 100%;
+                    }
+                }
+
+                .restourant-text
+                {
+                    flex-grow: 1;
+                    text-align: center;
+
+                    #Piva
+                    {
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                    }
                 }
             }
-        
-
         }
+
+
+        
+        
+        
     }
 
     // STILE CARD MENU 
