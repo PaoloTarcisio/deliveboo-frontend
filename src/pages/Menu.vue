@@ -153,65 +153,81 @@ export default {
             </h2>
 
             <div v-if="restaurant.plates.length > 0">
-                            <!-- MENU RISTORANTE 2 -->
-                <div class="row card-plate-row my-3">
-                    <div class="col-lg-2 col-md-4 col-sm-8 card-plate m-3 px-5 py-3"  v-for="plate in restaurant.plates">
-                        <div class="img-card-plate m-3">
-                            <img :src="plate.image" alt="" class="info-restaurant">
-                        </div>
 
-                        <div class="card-plate-content">
-                            <div class="card-plate-name-price">
-                                <div class="card-plate-name">
-                                    <h4 class="text-center">
+
+                            <!-- MENU RISTORANTE -->
+                <div class="card-plate-row">
+                    <div class="card-plate my-3 px-5 py-3"  v-for="plate in restaurant.plates">
+
+                        <div class="row p-0">
+
+                            <div class="col-lg-3 col-md-12 col-sm-12 order-sm-first">
+                                <div class="img-card-plate">
+                                    <img :src="plate.image" alt="">
+                                </div>
+                            </div>
+    
+                            <!-- scritte card piatti -->
+                            <div class="col-lg-9 col-md-12 col-sm-12 order-sm-last">
+                                <div class="card-plate-content pt-3">
+
+                                    <!-- nome/prezzo -->
+                                    <div class="card-plate-name-price">
+                                        <div class="card-plate-name">
+                                            <h4>
+                                                {{ plate.name }}
+                                            </h4>
+                                        </div>
+                    
+                                        <div class="card-plate-price">
+                                            <h5>
+                                                {{ plate.price }} €
+                                            </h5>
+                                        </div>
+                                    </div>
+                
+                                    <!-- ingredienti/descrizione -->
+                                    <div class="card-plate-description-ingredients">
+                                        <div class="card-plate-description mb-4">
+                                            {{ plate.description }}
+                                        </div>
+                    
+                                        <div class="card-plate-ingredients">
+                                            <span class="ingredienti">
+                                                Ingredienti:
+                                            </span>
+                                            {{ plate.ingredients }}
+                                        </div>
+                                    </div>
                                         
-                                        {{ plate.name }}
-                                    </h4>
-                                </div>
-            
-                                <div class="card-plate-price">
-                                    <h5>
-                                        {{ plate.price }} €
-                                    </h5>
-                                </div>
-                            </div>
+                                    <!-- bottoni -->
+                                    <div class="card-plate-order pt-3">
+                                        <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
+                                        <div v-if="getQuantity(plate.id) > 0">
+                                            <!-- bottone + -->
+                                            <button class="fa-solid fa-plus" @click="addToCart(plate, 1)"></button>
         
-                            <div class="card-plate-description-ingredients">
-                                <div class="card-plate-description mb-4">
-                                    {{ plate.description }}
-                                </div>
-            
-                                <div class="card-plate-ingredients">
-                                    <span class="ingredienti">
-                                        Ingredienti:
-                                    </span>
-                                    {{ plate.ingredients }}
-                                </div>
-                            </div>
-                                  
-                            <div class="card-plate-order pt-3">
-                                <!-- Condizionale per mostrare i controlli solo se il piatto è già nel carrello -->
-                                <div v-if="getQuantity(plate.id) > 0">
-                                    <!-- bottone + -->
-                                    <button class="fa-solid fa-plus" @click="addToCart(plate, 1)"></button>
-
-                                    <!-- Mostra la quantità -->
-                                    <span>{{ getQuantity(plate.id) }}</span> 
-
-                                    <!-- bottone - -->
-                                    <button class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></button>
-
-                                    <!-- Bottone per rimuovere tutto -->
-                                    <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> 
-                                </div>
-                                <div v-else>
-                                    <!-- bottone carrellino-->
-                                    <button class="btn btn-success" @click="addToCart(plate, 1)">
-                                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                                    </button>
+                                            <!-- Mostra la quantità -->
+                                            <span>{{ getQuantity(plate.id) }}</span> 
+        
+                                            <!-- bottone - -->
+                                            <button class="fa-solid fa-minus" @click="decreaseQuantity(plate.id)"></button>
+        
+                                            <!-- Bottone per rimuovere tutto -->
+                                            <button @click="removeFromCart(plate.id)">Rimuovi tutto</button> 
+                                        </div>
+                                        <div v-else>
+                                            <!-- bottone carrellino-->
+                                            <button class="btn btn-success" @click="addToCart(plate, 1)">
+                                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+                        <!-- immagine card piatti -->
 
                     </div>
                 </div>
@@ -275,16 +291,12 @@ export default {
 
         .card-plate-row
         {
-            flex-direction: column;
-            align-content: center;
 
 
             .card-plate
             {
-                display: flex;
-                justify-content: center;
                 width: 70%;
-                border-radius: 20px;
+                margin: 0 auto;
                 background-color: $primary;
                 color: $secondary;
                 border-radius: 30px;
@@ -294,39 +306,29 @@ export default {
                 {
                     img
                     {
-                        width: 15rem;
-                        border-radius: 130px;
+                        width: 17rem;
+                        border-radius: 13000px;
                         box-shadow: 3px 3px 10px;
+                        margin-bottom: 3rem;
                     }
                 }
 
                 
                 .card-plate-content
                 {
-                    flex-grow: 1;
-                    padding: 1rem;
+                    width: 70%;
+                    margin: 0 auto;
+                    text-align: start;
 
 
                     .card-plate-name-price
                     {
-
-                        .card-plate-name
-                        {}
-
-                        .card-plate-price
-                        {}
-
+                        padding-left: 3.3rem;
                     }
-
-                    
                     .card-plate-description-ingredients
                     {
                         font-size: 1.1rem;
-                        .card-plate-description
-                        {
-
-                        }
-
+                        padding-left: 3.3rem;
                         .card-plate-ingredients
                         {
 
@@ -336,6 +338,7 @@ export default {
                             }
                         }
                     }
+
                 }
 
                 .card-plate-order
