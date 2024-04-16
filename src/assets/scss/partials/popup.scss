@@ -3,14 +3,15 @@
     bottom: 100px;
     right: 75px; 
     z-index: 5;
-    background-color: $secondary;
-    color: $primary;
+    background-color: $primary;
+    color: $secondary;
+    border: 1px solid $secondary;
     border-radius: 50px;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 20px;
-    box-shadow: 0 10px 10px black;
+    box-shadow: 0 3px 3px black;
     transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265);
     animation: fadeIn;
     visibility: visible;

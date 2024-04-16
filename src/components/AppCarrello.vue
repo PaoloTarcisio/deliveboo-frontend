@@ -24,32 +24,33 @@ data() {
     },
     mounted() {
      this.loadFromLocalStorage();
-   }
+   },
 };
 </script>
 
 <template>
     <!--FLOATING BUTTON-->
-    <button class="btn-cart" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+    <a class="btn-cart" type="button" href="/carrello">
         <i class="fa-solid fa-cart-shopping"></i>
-    </button>
+    </a>
 
     <div class="badge-counter">
     </div>
 
+    <!--
     <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
         <div class="offcanvas-header">
           <h3 class="offcanvas-title" id="staticBackdropLabel">CARRELLO</h3>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
-        <!--INIZIO CORPO CARRELLO-->
+        INIZIO CORPO CARRELLO
         <div class="offcanvas-body d-flex align-content-between flex-wrap" style="background-image: url(./src/assets/img/undraw_shopping_app_flsj.png); 
                                           background-size: contain;
                                           background-position: center;
                                           background-repeat: no-repeat;"> 
                 
-                <!---->
+                
                 <div class="container-list-group">
                   <ul class="plates-list p-0">
                       <li class="card">
@@ -111,10 +112,12 @@ data() {
                     </a>
                   </div>
                 </div>
-        </div>
-
+      </div>
+  
 
     </div>
+  -->
+ 
 </template>
 
 <style lang="scss" scoped>
