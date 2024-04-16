@@ -129,7 +129,7 @@ export default {
 
 
 <template>
-    <form @submit.prevent="submitPayment">
+    
     <div class="checkout-page">
     
         <div class="card p-2">
@@ -148,7 +148,7 @@ export default {
                 <div class="cart-resume-left order-sm-last order-md-first col-sm-12 col-md-5 col-12 text-end">
                     <div class="card-body braintree-container text-center">
 
-                       
+                        <form @submit.prevent="submitPayment">
                         
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome e Cognome</label>
@@ -173,6 +173,7 @@ export default {
                             <div class="text-center">
                                 <button type="submit" class="btn btn-braintree">Procedi con l'ordine</button>
                             </div>
+                        </form>
                     </div>
                 </div>
 
@@ -210,7 +211,7 @@ export default {
             </div>
         </div>
     </div>
-</form>
+    
 </template>
 
 
