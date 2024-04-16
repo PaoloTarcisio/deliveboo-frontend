@@ -128,23 +128,70 @@ export default {
 
 
 <template>
-    <div class="checkout-page p-5 m-5">
-        <div class="card p-3 m-3">
-          <h2>Carrello</h2>
-          <div v-for="item in cart" :key="item.plateId">
-            <p>{{ item.name }} - Quantità: {{ item.quantity }} - Prezzo per unità: {{ item.price }}€</p>
-            <button @click="decreaseQuantity(item.plateId)">-</button>
-            <button @click="addToCart(item, 1)">+</button>
-            <button @click="removeFromCart(item.plateId)">Rimuovi</button>
-                <div class="bg-danger">
-                    <button @click="svuotaCarrello">Svuota Carrello</button>
+    <div class="checkout-page">
+        <div class="card p-2">
+            <h2 class="text-center">
+                Carrello
+            </h2>
+
+          <div class="row">
+            
+            <div class="cart-resume col-7">
+                <div v-for="item in cart" :key="item.plateId">
+                    <div class=" border d-flex justify-content-evenly my-3">
+
+                        <span class="btn-plus-minus">
+                            <br>
+                            <br>
+                            <button class="btn-checkout" @click="decreaseQuantity(item.plateId)">-</button>
+                        </span>
+
+                        <span>
+                            <p>
+                            {{ item.name }} <span v-if="item.quantity > 1" class="item-quantity-cont">x{{ item.quantity }}</span>
+                            <br>
+                            Prezzo per prodotto: 
+                            {{ item.price }} €
+                            
+                            </p>
+                            <p class="text-center">
+                                <button class="btn-checkout" @click="svuotaCarrello"><i class="fa-solid fa-trash"></i></button>
+                            </p>
+                        </span>
+
+                        <span>
+                            <br>
+                            <br>
+                            <button class="btn-checkout" @click="addToCart(item, 1)">+</button>
+                            <!--
+                                <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
+                            -->
+                        </span>
+
+                    </div>
+                    
                 </div>
-                <h2>{{ totalItem }}</h2>
+                <div class="text-center my-4">
+                        <h3>
+                            Totale: {{ calculateTotal() }} €
+                        </h3>
+                    </div>
+                
+            </div>
+
+
+            <div class="col-5 d-flex flex-column">
+                <div class="speechBubble">
+                    <p data-text="Grazie per averci scelto!" class="pp">
+                        Grazie per averci scelto!
+                    </p>
+                </div>
+            </div>
+
           </div>
-          <h3>Totale: {{ calculateTotal() }} €</h3>
         </div>
  
-        <div class="card p-5 m-5">
+        <div class="card">
           <div class="card-body">
             <form @submit.prevent="submitPayment">
               <div class="mb-3">
