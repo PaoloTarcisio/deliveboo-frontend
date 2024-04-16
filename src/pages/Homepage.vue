@@ -5,6 +5,7 @@ export default {
   data() {
     return {
             paymentSuccess: this.$route.query.payment === 'success',
+            totalItem: 0,
             restaurants:[],
             types:[],
             currentPage: 1,
@@ -37,12 +38,24 @@ export default {
         },
         emptySelectedType(){
             this.selectedTypes = [];
+        },
+        
+        loadFromLocalStorage() {
+            const storedCart = localStorage.getItem('cart');
+            this.cart = storedCart ? JSON.parse(storedCart) : [];
+        },
+        calculateTotalItem() {
+            this.totalItem = this.cart.reduce((total, item) => total + item.quantity, 0);
+            localStorage.setItem('totalItem', this.totalItem);
         }
     },
     
     created () {
         
         this.getRestaurants(this.currentPage);
+        this.loadFromLocalStorage();
+        const storedTotalItem = localStorage.getItem('totalItem');
+        this.totalItem = storedTotalItem ? parseInt(storedTotalItem) : 0;
 
         axios
             .get('http://127.0.0.1:8000/api/types')
@@ -69,6 +82,15 @@ export default {
 </script>
 
 <template>
+
+    <!--POPUP-->
+    <div v-if="totalItem > 0" class="badge-counter">
+        <div class="pop-up">
+            {{ totalItem }}
+        </div>
+    </div>
+    <!--FINE POPUP-->
+
     <!-- JUMBO -->
     <div>
         <div v-if="paymentSuccess" class="alert alert-success message-payment text-center w-50 mx-auto">
@@ -93,6 +115,7 @@ export default {
                         <button type="button" @click="selectType(type.id)" class="types d-flex flex-column align-items-center justify-content-center" :class="{ 'active': selectedTypes.includes(type.id) }">
                             <div style="width: 60%; min-width: 50px;">
                                 <img class="w-100" :src="type.icon" alt="#">
+                                
                             </div>
                             
                             <div>
@@ -143,6 +166,7 @@ export default {
 <style lang="scss" scoped>
     @import "../assets/scss/partials/homepage.scss";
     @import "../assets/scss/partials/variables.scss";
+    @import "../assets/scss/partials/popup.scss";
 
     .message-payment {
         z-index: 1000;

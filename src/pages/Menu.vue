@@ -108,10 +108,10 @@ export default {
     <app-modal :show="showModal" @update:show="showModal = $event" @confirm="confirmModal"/>
 
     <div v-if="totalItem > 0" class="badge-counter">
-            <div class="pop-up">
-                {{ totalItem }}
-            </div>
+        <div class="pop-up">
+            {{ totalItem }}
         </div>
+    </div>
 
     <div class="my-container">
     
@@ -229,8 +229,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/scss/partials/variables.scss";
-
-@import "../assets/scss/partials/menu.scss";
+@import "../assets/scss/partials/popup.scss";
 
 
 .my-container{
