@@ -1,70 +1,55 @@
 @use "partials/variables.scss" as *;
 @use "partials/mixins.scss" as *;
 
-// Import all of Bootstrap's CSS
 @import "bootstrap/scss/bootstrap";
+
 /*
     FLOATING BUTTON
 */
-
-@keyframes loop {
-  0%{
-    transition: 3s;
-  }
-  50%{
-    transition: 3s;
-    background-color: $primary;
-    color: $secondary;
-  }
-  0%{
-    transition: 3s;
-  }
-}
-
-.btn-cart{
-  position: fixed;
-    bottom: 40px;
-    right: 60px; 
-    z-index: 3;
-    background-color: $secondary;
-    border-radius: 50px;
-    padding: 15px;
-    color: $primary;
-    font-size: 30px;
-}
-
-.btn-cart:hover{
-    animation-name: loop;
-    animation-iteration-count: infinite;
-    animation-duration: 5s;
-}
-
 @keyframes changeColor {
-  0%{
+  0%, 100% {
     background-color: $secondary;
     color: $primary;
-    transition: 3s;
   }
-  50%{
-    transition: 3s;
+  50% {
     background-color: $primary;
     color: $secondary;
   }
-  100%{
-    background-color: $secondary;
+}
+
+.btn-cart {
+  position: fixed;
+  bottom: 40px;
+  right: 60px;
+  z-index: 3;
+  background-color: $secondary;
+  border-radius: 50px;
+  padding: 15px;
+  color: $primary;
+  font-size: 30px;
+  border: 2px solid $primary;
+
+  i {
     color: $primary;
-    transition: 3s;
+  }
+
+  &:hover {
+    animation: changeColor 5s infinite;
+
+    i {
+      animation: changeColor 5s infinite;
+    }
   }
 }
 
-.offcanvas-header{
-  animation-name: changeColor;
-  animation-iteration-count: infinite;
-  animation-duration: 3s;
+.offcanvas-header {
+  animation: changeColor 3s infinite;
 }
-.btn-close{
+
+.btn-close {
   color: $secondary;
 }
-.btn-close:hover{
+
+.btn-close:hover {
   border: solid white;
 }

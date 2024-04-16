@@ -25,6 +25,11 @@ export default {
     },  
     methods: {
     },
+    computed: {
+        isCarrello() {
+        return this.$route.path === '/carrello';
+        }
+    }
 }
 </script>
 
@@ -35,7 +40,7 @@ export default {
 
     <AppFooter />
 
-    <AppCarrello />
+    <AppCarrello v-if="!isCarrello" />
 </template>
 
 <style lang="scss">
