@@ -9,6 +9,8 @@
     max-height: 400px;
     min-height: 400px;
     overflow-y: scroll;
+}
+.cart-resume > div {
     background-color: peru;
 }
 .btn-checkout{
@@ -23,8 +25,8 @@
     padding: 2px 5px 2px 5px;
     border-radius: 20%;
 }
-.col-5{
-    background-image: url("../assets/img/japanese.png");
+.col-md-5{
+    background-image: url("../assets/img/thanks.png");
     background-position:center;
     background-size:contain;
     background-repeat: no-repeat;
