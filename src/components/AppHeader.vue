@@ -12,7 +12,7 @@ export default {
 
 <template>
     <!--NAVBAR-->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <span>
                 <a class="navbar-brand me-auto d-none d-lg-inline" href="/"><img src="/src/assets/img/deliveboo.png" alt="logo" class="w-75"></a>
