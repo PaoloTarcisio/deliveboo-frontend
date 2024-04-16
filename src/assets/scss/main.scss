@@ -6,6 +6,7 @@
 /*
     FLOATING BUTTON
 */
+/*
 @keyframes changeColor {
   0%, 100% {
     background-color: $secondary;
@@ -16,6 +17,7 @@
     color: $secondary;
   }
 }
+*/
 
 .btn-cart {
   position: fixed;
@@ -23,8 +25,13 @@
   right: 60px;
   z-index: 3;
   background-color: $secondary;
-  border-radius: 50px;
+  border-radius: 50%;
   padding: 15px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
   color: $primary;
   font-size: 30px;
   border: 2px solid $primary;
@@ -34,10 +41,12 @@
   }
 
   &:hover {
-    animation: changeColor 5s infinite;
+    background-color: $primary;
+    color: $secondary;
+    border: 2px solid $secondary;
 
     i {
-      animation: changeColor 5s infinite;
+      color: $secondary;
     }
   }
 }
