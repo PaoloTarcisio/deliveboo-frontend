@@ -133,14 +133,22 @@ export default {
     <div class="checkout-page">
     
         <div class="card p-2">
-            <h1 class="text-center my-4">
-                CARRELLO
-            </h1>
+            <div class="speechBubble text-center">
+                <h1 data-text="Grazie per averci scelto!" class="pp">
+                    Grazie per averci scelto!
+                </h1>
+            </div>   
 
-            <div class="row">
+            <div class="thanks-bg">
+                        
+                    </div>
+
+            <div class="cart-resume row">
             
-                <div class="col-sm-12 col-md-5 col-12 text-end">
+                <div class="cart-resume-left order-sm-last order-md-first col-sm-12 col-md-5 col-12 text-end">
                     <div class="card-body braintree-container text-center">
+
+                       
                         
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome e Cognome</label>
@@ -163,13 +171,13 @@ export default {
                             </div>
                             <div id="dropin-container"></div>
                             <div class="text-center">
-                                
+                                <button type="submit" class="btn btn-braintree">Procedi con l'ordine</button>
                             </div>
                     </div>
                 </div>
 
-                <div class="cart-resume col-md-7 col-sm-0 col-0">
-                    <div v-for="item in cart" :key="item.plateId">
+                <div class="cart-resume-right col-md-7 col-sm-0 col-0">
+                    <div class="cart-element-right" v-for="item in cart" :key="item.plateId">
                         <div class="d-flex justify-content-evenly my-3">
 
                             <span class="my-4 text-center">
@@ -186,15 +194,12 @@ export default {
                                 <button class="btn-checkout" @click="addToCart(item, 1)">+</button>
                                 <br>
                                 <button class=" my-3 btn-checkout" @click="decreaseQuantity(item.plateId)">-</button>
-                                <!--
-                                    <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
-                                -->
                             </span>
 
                         </div>
                         
                     </div>
-                    <div class="text-center my-4 p-4">
+                    <div class="cart-element-right text-center my-4 p-4">
                         <h3>
                             Totale: {{ calculateTotal() }} €
                         </h3>
@@ -204,20 +209,6 @@ export default {
 
             </div>
         </div>
- 
-        <div class="thanks-bg">
-            <div class="speechBubble text-center">
-                <p data-text="Grazie per averci scelto!" class="pp">
-                    Grazie per averci scelto!
-                </p>
-                
-            </div>
-            
-        </div>
-        <div class="text-center">
-                <button type="submit" class="btn btn-braintree">Procedi con l'ordine</button>
-            </div>
-    
     </div>
 </form>
 </template>
