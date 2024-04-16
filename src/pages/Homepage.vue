@@ -70,22 +70,14 @@ export default {
 
 <template>
     <!-- JUMBO -->
-    <div class="container-fluid">
-
+    <div>
         <div v-if="paymentSuccess" class="alert alert-success message-payment text-center w-50 mx-auto">
             Pagamento avvenuto con successo!
             <button class="btn" @click="clearMessage">X</button>
         </div>
 
         <section class="background-header">
-            <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
-                <h1>
-                    Deliveboo
-                </h1>
-                <h2>
-                    Buono da far paura
-                </h2>
-            </div>
+            <img src="/src/assets/img/jumbotron.png" alt="">
         </section>
     </div>
     <!--end jumbo-->
@@ -113,13 +105,12 @@ export default {
         </div>
     </div>
 
-    <section class="cards">
-        <div class="row p-4" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
-            <div v-if="filteredRestaurants.length != 0" class="my-card col-lg-3 col-md-5 p-3 m-2" v-for="restaurant in filteredRestaurants">
-                <router-link class="btn btn-primary" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
-                    <div class="card-img">
-                        <img :src="restaurant.image" alt="restaurant.activity_name">
-                    </div>
+    <section class="cards p-2">
+        <div class="row p-4 restaurants" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
+            <div v-if="filteredRestaurants.length != 0" class="col-lg-3 col-md-6 g-3" v-for="restaurant in filteredRestaurants">
+                <router-link class="btn btn-primary card my-card p-0 border-0 h-100" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
+
+                    <img :src="restaurant.image" class="card-img-top" alt="restaurant.activity_name">
 
                     <div class="my-card-body">
                         <div class="my-card-title p-2">
@@ -135,10 +126,14 @@ export default {
                 </router-link>
             </div>
 
-            <h1 v-else class="text-center text-primary fs-1">
-                <p>Nessun ristorante disponibile</p>
-                <button class="badge rounded-5 p-4 text-secondary bg-primary" @click="emptySelectedType()">Torna ai ristoranti</button>
-            </h1>
+            <div v-else class="text-center text-primary">
+                <div class="text-center mb-3">
+                    <p class="fw-bolder fs-1">Nessun ristorante disponibile</p>
+                    <button class="badge rounded-5 fs-3 p-4 text-secondary bg-primary" @click="emptySelectedType()">Torna ai ristoranti</button>
+                </div>
+
+                <img src="/src/assets/img/dishes-not-found.png" alt="dishes-not-found" class="rounded-3">
+            </div>
         </div>
     </section>
 
@@ -170,14 +165,15 @@ export default {
             padding: 10px 15px;
             border: 2px solid $primary;
             border-radius: 30px;
-            color: $primary;
+            color: $tertiary;
+            background-color: $primary;
         }
 
         .types:hover, .types.active
         {
-            color: $tertiary;
+            color: $primary;
             border: 2px solid $primary;
-            background-color: $primary;
+            background-color: $secondary;
             
         }
 
@@ -219,6 +215,35 @@ export default {
         }
     }
 
+
+    // scrollbar
+    .restaurants {
+    --sb-track-color: #FF8732;
+    --sb-thumb-color: #502314;
+    --sb-size: 10px;
+    }
+
+    .restaurants::-webkit-scrollbar {
+    width: var(--sb-size)
+    }
+
+    .restaurants::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 5px;
+    }
+
+    .restaurants::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 5px;
+    
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+    .restaurants {
+        scrollbar-color: var(--sb-thumb-color)
+                        var(--sb-track-color);
+    }
+    }
 
     
 </style>

@@ -218,8 +218,9 @@ export default {
 
             </div>
 
-            <div v-else>
+            <div v-else class="p-3">
                 <h3 class="text-center">Non ci sono piatti disponibili nel menù.</h3>
+                <img src="/src/assets/img/dishes-not-found.png" alt="dishes-not-found" class="rounded-3">
             </div>
         </section>
     </div>
