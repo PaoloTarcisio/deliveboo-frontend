@@ -66,6 +66,7 @@ export default {
         },
         svuotaCarrello() {
             this.cart.splice(0, this.cart.length);
+            this.calculateTotalItem();
             localStorage.setItem('cart', JSON.stringify(this.cart));
         },
         calculateTotalItem() {
