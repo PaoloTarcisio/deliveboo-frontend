@@ -132,7 +132,7 @@ export default {
                     <button class="badge rounded-5 fs-3 p-4 text-secondary bg-primary" @click="emptySelectedType()">Torna ai ristoranti</button>
                 </div>
 
-                <img src="/src/assets/img/dishes-not-found.png" alt="dishes-not-found" class="rounded-3">
+                <img src="/src/assets/img/restaurants-not-found.png" alt="restaurants-not-found" class="rounded-3">
             </div>
         </div>
     </section>
@@ -176,15 +176,15 @@ export default {
             padding: 10px 15px;
             border: 2px solid $primary;
             border-radius: 30px;
-            color: $primary;
-            background-color: $tertiary;
+            color: $secondary;
+            background-color: $primary;
         }
 
         .types:hover, .types.active
         {
-            color: $secondary;
+            color: $primary;
             border: 2px solid $primary;
-            background-color: $primary;
+            background-color: $tertiary;
             
         }
 
