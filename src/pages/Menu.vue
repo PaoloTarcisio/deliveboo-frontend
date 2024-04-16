@@ -345,7 +345,9 @@ export default {
             color: $primary;
         }
 
-
+        h3 {
+            color: $primary;
+        }
         .card-plate-row
         {
 
