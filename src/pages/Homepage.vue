@@ -87,7 +87,7 @@ export default {
     <div class="categories-container p-4">
         <div class="container">
             <div class="container">
-                <h1 class="text-center text-black">Guarda i ristoranti in base ai tuoi gusti!</h1>
+                <h1 class="text-center">Guarda i Ristoranti in base ai tuoi gusti!</h1>
                 <div class="row">
                     <div class="col-2 pt-4" v-for="type in types">
                         <button type="button" @click="selectType(type.id)" class="types d-flex flex-column align-items-center justify-content-center" :class="{ 'active': selectedTypes.includes(type.id) }">
@@ -156,7 +156,18 @@ export default {
     // BOTTONI CATEGORIE
 
     .categories-container
-    {
+    {   
+        background-color: $secondary;
+
+        .container{
+            .container{
+                 h1 {
+                    color: $primary;
+                }
+            }
+        }
+
+
         .types
         {
             text-decoration: none;
@@ -165,15 +176,15 @@ export default {
             padding: 10px 15px;
             border: 2px solid $primary;
             border-radius: 30px;
-            color: $tertiary;
-            background-color: $primary;
+            color: $primary;
+            background-color: $tertiary;
         }
 
         .types:hover, .types.active
         {
-            color: $primary;
+            color: $secondary;
             border: 2px solid $primary;
-            background-color: $secondary;
+            background-color: $primary;
             
         }
 

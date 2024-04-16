@@ -30,9 +30,6 @@ export default {
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="/carrello">Carrello</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="/checkout">Checkout</a>
-                        </li>
                     </ul>
                 </div>
             </div>
