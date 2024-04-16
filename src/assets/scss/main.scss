@@ -9,14 +9,15 @@
 
 @keyframes loop {
   0%{
-    padding: 15px;
     transition: 3s;
   }
-  100%{
-    padding: 20px;
+  50%{
     transition: 3s;
     background-color: $primary;
     color: $secondary;
+  }
+  0%{
+    transition: 3s;
   }
 }
 
@@ -35,7 +36,7 @@
 .btn-cart:hover{
     animation-name: loop;
     animation-iteration-count: infinite;
-    animation-duration: 1s;
+    animation-duration: 5s;
 }
 
 @keyframes changeColor {

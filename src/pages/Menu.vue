@@ -282,8 +282,6 @@ export default {
         }
     }
 
-
-
     // STILE CARD MENU 
 
     .section-menu

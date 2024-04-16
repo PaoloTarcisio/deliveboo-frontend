@@ -92,7 +92,7 @@ export default {
     <!--FINE POPUP-->
 
     <!-- JUMBO -->
-    <div>
+    <div class="jumbo">
         <div v-if="paymentSuccess" class="alert alert-success message-payment text-center w-50 mx-auto">
             Pagamento avvenuto con successo!
             <button class="btn" @click="clearMessage">X</button>
@@ -106,30 +106,28 @@ export default {
 
     <!--parte dell'homepage che contiene LE CATEGORIE-->
 
-    <div class="categories-container p-4">
+    <div class="categories-container p-3">
         <div class="container">
-            <div class="container">
-                <h1 class="text-center">Guarda i Ristoranti in base ai tuoi gusti!</h1>
-                <div class="row">
-                    <div class="col-2 pt-4" v-for="type in types">
-                        <button type="button" @click="selectType(type.id)" class="types d-flex flex-column align-items-center justify-content-center" :class="{ 'active': selectedTypes.includes(type.id) }">
-                            <div style="width: 60%; min-width: 50px;">
-                                <img class="w-100" :src="type.icon" alt="#">
-                                
-                            </div>
-                            
-                            <div>
-                                {{ type.name }}
-                            </div>
-                        </button>
-                    </div>
+            <h2 class="text-center mb-3">Guarda i Ristoranti in base ai tuoi gusti!</h2>
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-4 py-1" v-for="type in types">
+                    <button type="button" @click="selectType(type.id)"
+                            class="types d-flex flex-column align-items-center justify-content-center"
+                            :class="{ 'active': selectedTypes.includes(type.id) }">
+                        <div class="type-icon w-50">
+                            <img class="w-100 img-fluid d-none d-md-block" :src="type.icon" alt="type.name">
+                        </div>
+                        <div class="fs-sm-7">
+                            {{ type.name }}
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <section class="cards p-2">
-        <div class="row p-4 restaurants" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
+        <div class="row px-4 restaurants" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
             <div v-if="filteredRestaurants.length != 0" class="col-lg-3 col-md-6 g-3" v-for="restaurant in filteredRestaurants">
                 <router-link class="btn btn-primary card my-card p-0 border-0 h-100" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">
 
@@ -183,15 +181,9 @@ export default {
     {   
         background-color: $secondary;
 
-        .container{
-            .container{
-                 h1 {
-                    color: $primary;
-                }
+                h2 {
+                color: $primary;
             }
-        }
-
-
         .types
         {
             text-decoration: none;
