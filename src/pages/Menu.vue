@@ -117,13 +117,13 @@ export default {
     
         <!-- INFORMAZIONI RISTORANTE -->
         
-        <section class="section-restourant-detail py-5">
-            <div class="restourant-detail ">
+        <section class="section-restourant-detail">
+            <div class="restourant-detail">
                 <div class="card mx-5">
                     <div class="row">
                         <div class="col-lg-3 col-md-12 col-sm-12">
-                            <div class="restourant-image">
-                                <img :src="restaurant.image" alt="">
+                            <div class="restourant-image h-100">
+                                <img :src="restaurant.image" alt="" class="img-fluid h-100 w-100">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 flex-grow-1 py-3">
@@ -242,7 +242,7 @@ export default {
             </div>
 
             <div v-else class="else-category p-3">
-                <h3 class="text-center">Non ci sono piatti disponibili nel menù.</h3>
+                <h3 class="text-center">Non ci sono piatti disponibili nel Menù.</h3>
                 <img src="/src/assets/img/dishes-not-found.png" alt="dishes-not-found" class="rounded-3">
             </div>
         </section>
@@ -254,13 +254,13 @@ export default {
 @import "../assets/scss/partials/variables.scss";
 @import "../assets/scss/partials/popup.scss";
 
-
 .my-container{
 
 
 
     .section-restourant-detail
-    {
+    {   
+        padding: 100px 0 50px 0;
         background-color: $tertiary;
 
         .card
@@ -280,14 +280,32 @@ export default {
                 }
                 .restourant-image
                 {
-                    img
+                    /*img
                     {
                         width: 100%;
                         border-top-left-radius: 20px;
                         border-bottom-left-radius: 20px;
 
+                    }*/
+                
+
+                img {
+                    width: 100%;
+                    border-radius: 0;
+                    @media (min-width: 768px) {
+                        border-top-left-radius: 20px;
+                        border-top-right-radius: 20px;
+                        border-bottom-left-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+                    @media (min-width: 992px) {
+                        border-top-left-radius: 20px;
+                        border-bottom-left-radius: 20px;
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
                     }
                 }
+                }   
 
                 .restourant-text
                 {
