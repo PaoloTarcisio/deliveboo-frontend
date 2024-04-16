@@ -140,8 +140,8 @@ export default {
                         <div class="my-card-description p-3">
                             <p>{{ restaurant.description }}</p>
                         </div>
-                        <p v-for="type in restaurant.types">
-                            <span class="badge rounded-4 text-primary bg-secondary fs-5 mb-2">{{type.name}}</span>
+                        <p class="d-inline px-1" v-for="type in restaurant.types">
+                            <span class="badge rounded-4 text-primary bg-secondary fs-6 mb-2">{{type.name}}</span>
                         </p>
                     </div>
                 </router-link>
