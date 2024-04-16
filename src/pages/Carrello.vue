@@ -129,93 +129,98 @@ export default {
 
 
 <template>
+    <form @submit.prevent="submitPayment">
     <div class="checkout-page">
+    
         <div class="card p-2">
             <h1 class="text-center my-4">
                 CARRELLO
             </h1>
 
-          <div class="row">
+            <div class="row">
             
-            <div class="cart-resume col-sm-12 col-md-7 col-12">
-                <div v-for="item in cart" :key="item.plateId">
-                    <div class="border d-flex justify-content-evenly my-3">
-
-                        <span class="my-4">
-                            <button class="btn-checkout" @click="decreaseQuantity(item.plateId)">-</button>
-                        </span>
-
-                        <span class="my-4 text-center">
-                            <p>
-                            {{ item.name }} <span v-if="item.quantity > 1" class="item-quantity-cont">x{{ item.quantity }}</span>
-                            <br>
-                            Prezzo per prodotto: 
-                            {{ item.price }} €
-                            </p>
-                            <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
-                        </span>
-
-                        <span class="my-4">
-                            <button class="btn-checkout" @click="addToCart(item, 1)">+</button>
-                            <!--
-                                <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
-                            -->
-                        </span>
-
+                <div class="col-sm-12 col-md-5 col-12 text-end">
+                    <div class="card-body braintree-container text-center">
+                        
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome e Cognome</label>
+                                <input type="text" class="form-control" id="name" v-model="orderData.name" placeholder="Inserisci il tuo nome e cognome" required>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-5">
+                                    <label for="phone" class="form-label">Telefono</label>
+                                    <input type="text" class="form-control" id="phone" v-model="orderData.phone" placeholder="Inserisci il tuo telefono" required>
+                                </div>
+                                <div class="col-7">
+                                    <label for="address" class="form-label">Indirizzo</label>
+                                    <input type="text" class="form-control" id="address" v-model="orderData.address" placeholder="Inserisci il tuo indirizzo" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Note</label>
+                                <textarea class="form-control" id="notes" v-model="orderData.notes" placeholder="Note aggiuntive" rows="3"></textarea>
+                            </div>
+                            <div id="dropin-container"></div>
+                            <div class="text-center">
+                                
+                            </div>
                     </div>
-                    
                 </div>
-                <div class="text-center my-4 p-4">
+
+                <div class="cart-resume col-md-7 col-sm-0 col-0">
+                    <div v-for="item in cart" :key="item.plateId">
+                        <div class="d-flex justify-content-evenly my-3">
+
+                            <span class="my-4 text-center">
+                                <p>
+                                {{ item.name }} <span v-if="item.quantity > 1" class="item-quantity-cont">x{{ item.quantity }}</span>
+                                <br>
+                                Prezzo per prodotto: 
+                                {{ item.price }} €
+                                </p>
+                                <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
+                            </span>
+
+                            <span class="my-4">
+                                <button class="btn-checkout" @click="addToCart(item, 1)">+</button>
+                                <br>
+                                <button class=" my-3 btn-checkout" @click="decreaseQuantity(item.plateId)">-</button>
+                                <!--
+                                    <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
+                                -->
+                            </span>
+
+                        </div>
+                        
+                    </div>
+                    <div class="text-center my-4 p-4">
                         <h3>
                             Totale: {{ calculateTotal() }} €
                         </h3>
-                        <button class="btn-checkout" @click="svuotaCarrello">Svuota carrello</button>
+                        <button class="btn-svuotaCarrello" @click="svuotaCarrello">Svuota carrello</button>
                     </div>
-                
-            </div>
-
-
-            <div class="col-md-5 col-sm-0 col-0 d-flex flex-column">
-                <div class="speechBubble">
-                    <p data-text="Grazie per averci scelto!" class="pp">
-                        Grazie per averci scelto!
-                    </p>
                 </div>
-            </div>
 
-          </div>
+            </div>
         </div>
  
-        <div class="card">
-            <div class="card-body bg-danger">
-                <form @submit.prevent="submitPayment">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nome e Cognome</label>
-                        <input type="text" class="form-control" id="name" v-model="orderData.name" placeholder="Inserisci il tuo nome e cognome" required>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="phone" class="form-label">Telefono</label>
-                            <input type="text" class="form-control" id="phone" v-model="orderData.phone" placeholder="Inserisci il tuo telefono" required>
-                        </div>
-                        <div class="col-6">
-                            <label for="address" class="form-label">Indirizzo</label>
-                            <input type="text" class="form-control" id="address" v-model="orderData.address" placeholder="Inserisci il tuo indirizzo" required>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                    <label for="notes" class="form-label">Note</label>
-                    <textarea class="form-control" id="notes" v-model="orderData.notes" placeholder="Note aggiuntive" rows="3"></textarea>
-                    </div>
-                    <div id="dropin-container"></div>
-                    <button type="submit" class="btn btn-primary">Procedi con l'ordine</button>
-                </form>
+        <div class="thanks-bg">
+            <div class="speechBubble text-center">
+                <p data-text="Grazie per averci scelto!" class="pp">
+                    Grazie per averci scelto!
+                </p>
+                
             </div>
-      </div>
+            
+        </div>
+        <div class="text-center">
+                <button type="submit" class="btn btn-braintree">Procedi con l'ordine</button>
+            </div>
+    
     </div>
+</form>
 </template>
-
 
 
 <style lang="scss" scoped>
