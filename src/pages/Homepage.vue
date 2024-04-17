@@ -112,7 +112,7 @@ export default {
 
     <div class="categories-container p-3">
         <div class="container">
-            <h2 class="text-center mb-3">Guarda i Ristoranti in base ai tuoi gusti!</h2>
+            <h2 class="text-center mb-3 fw-bold fs-1 py-2">Guarda i Ristoranti in base ai tuoi gusti!</h2>
             <div class="row">
                 <div class="col-lg-2 col-md-4 col-sm-4 col-4 py-1" v-for="type in types">
                     <button type="button" @click="selectType(type.id)"
