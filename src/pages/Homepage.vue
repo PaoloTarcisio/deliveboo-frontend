@@ -97,9 +97,17 @@ export default {
             
             <div class="message px-3 py-3 ms-3 col">
                 Pagamento avvenuto con successo! <br>
-            Un nostro collaboratore sta procedendo a preparare il tuo Ordine!
+                Un nostro collaboratore sta procedendo a preparare il tuo Ordine!
+            <div class="speechBubble text-center pt-3">
+                <div class="thanks-bg"></div>
+                <h3 data-text="Grazie per averci scelto!" class="pp">
+                    Grazie per averci scelto!
+                </h3>
+            </div> 
             </div>
             <div class="text-right"><button class="btn" @click="clearMessage"><i class="fa-solid fa-x"></i></button></div>
+  
+
         </div>
 
         <section class="background-header">
@@ -276,5 +284,60 @@ export default {
     }
     }
 
-    
+
+    .thanks-bg{
+    min-height: 300px;
+    background-image: url("../assets/img/thanks.png");
+    background-position:center;
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+.speechBubble{
+    text-align: end;
+    min-height: 60px;
+}
+
+/*
+.pp{
+    position: relative;
+    color: white;
+    -webkit-text-stroke: 1px black;
+}
+/*
+.pp::before{
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: $primary;
+    -webkit-text-stroke: 1px $primary;
+    overflow: hidden;
+    animation: animate 6s linear infinite;
+}
+@keyframes animate
+{
+    0%,10%,100%
+    {
+        width: 0;
+    }
+    70%,90%
+    {
+        width: 100%;
+    }
+}
+@keyframes loop {
+    0%{
+      transition: 3s;
+    }
+    50%{
+      transition: 5s;
+      background-color: $primary;
+      color: $secondary;
+    }
+    0%{
+        transition: 3s;
+      }
+  }
+*/ 
 </style>

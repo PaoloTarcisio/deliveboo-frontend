@@ -134,6 +134,7 @@ export default {
     <div class="checkout-page">
     
         <div class="card p-2">
+            <!--
             <div class="speechBubble text-center pt-5">
                 <h1 data-text="Grazie per averci scelto!" class="pp">
                     Grazie per averci scelto!
@@ -141,8 +142,11 @@ export default {
             </div>   
 
             <div class="thanks-bg"></div>
+            -->
 
-            <div class="cart-resume row">
+            <h3 class="text-center fw-bold fs-1 pt-5">Carrello</h3>
+
+            <div class="cart-resume row pt-3">
             
                 <div class="cart-resume-left order-sm-first col-md-6">
                     <div class="card-body braintree-container">
@@ -216,4 +220,9 @@ export default {
 
 <style lang="scss" scoped>
     @import "../assets/scss/partials/carrello.scss";
+
+    h3 {
+        color: $primary;
+    }
+    
 </style>
