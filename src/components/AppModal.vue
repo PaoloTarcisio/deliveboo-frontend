@@ -23,15 +23,15 @@ export default {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cambio Ristorante</h5>
-          <button type="button" class="close" @click="close">
+          <button type="button" class="close btn" @click="close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           Stai aggiungendo un piatto da un ristorante diverso. Vuoi svuotare il carrello e aggiungere questo piatto?
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="close">Annulla</button>
+        <div class="modal-footer pt-3">
+          <button type="button" class="btn btn-secondary m-3" @click="close">Annulla</button>
           <button type="button" class="btn btn-primary" @click="confirm">Procedi</button>
         </div>
       </div>

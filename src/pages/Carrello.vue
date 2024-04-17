@@ -114,6 +114,7 @@ export default {
             console.log('Order submitted successfully:', response.data);
             this.cart = [];
             this.updateLocalStorage();
+            this.calculateTotalItem();
             this.$router.push({ path: '/', query: { payment: 'success' } });
         } catch (error) {
             console.error('Failed to submit order:', error);
@@ -133,7 +134,7 @@ export default {
     <div class="checkout-page">
     
         <div class="card p-2">
-            <div class="speechBubble text-center">
+            <div class="speechBubble text-center pt-5">
                 <h1 data-text="Grazie per averci scelto!" class="pp">
                     Grazie per averci scelto!
                 </h1>
@@ -143,7 +144,7 @@ export default {
 
             <div class="cart-resume row">
             
-                <div class="cart-resume-left order-sm-last order-md-first col-md-6">
+                <div class="cart-resume-left order-sm-first col-md-6">
                     <div class="card-body braintree-container">
 
                         <form @submit.prevent="submitPayment">
@@ -175,7 +176,7 @@ export default {
                     </div>
                 </div>
 
-                <div class="cart-resume-right  order-sm-first order-md-last col-md-6">
+                <div class="cart-resume-right pt-3 mt-3 order-sm-last order-md-last col-md-6">
                     <div class="cart-element-right" v-for="item in cart" :key="item.plateId">
                         <div class="d-flex justify-content-evenly my-3">
 
@@ -186,13 +187,13 @@ export default {
                                 Prezzo per prodotto: 
                                 {{ item.price }} €
                                 </p>
-                                <button class="btn-checkout" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn-checkout py-2" @click="removeFromCart(item.plateId)"><i class="fa-solid fa-trash"></i></button>
                             </span>
 
                             <span class="my-4">
-                                <button class="btn-checkout" @click="addToCart(item, 1)">+</button>
+                                <button class="btn-checkout py-2" @click="addToCart(item, 1)"><i class="fa-solid fa-plus"></i></button>
                                 <br>
-                                <button class=" my-3 btn-checkout" @click="decreaseQuantity(item.plateId)">-</button>
+                                <button class=" my-3 btn-checkout py-2" @click="decreaseQuantity(item.plateId)"><i class="fa-solid fa-minus"></i></button>
                             </span>
 
                         </div>

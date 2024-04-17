@@ -157,8 +157,8 @@ export default {
 
         <!-- MENU RISTORANTE 1-->
         <section class="section-menu py-3">
-            <h2 class="py-4 text-center">
-                Il nostro menù:
+            <h2 class="py-4 text-center fw-bold">
+                Il nostro Menù:
             </h2>
 
             <div v-if="restaurant.plates.length > 0">
@@ -375,19 +375,19 @@ export default {
                 
                 .card-plate-content
                 {
-                    width: 70%;
+                    width: 60%;
                     margin: 0 auto;
                     text-align: start;
 
 
                     .card-plate-name-price
                     {
-                        padding-left: 3.3rem;
+                        //padding-left: 3.3rem;
                     }
                     .card-plate-description-ingredients
                     {
                         font-size: 1.1rem;
-                        padding-left: 3.3rem;
+                        //padding-left: 3.3rem;
                         padding-bottom: 1.5rem;
                         .card-plate-ingredients
                         {

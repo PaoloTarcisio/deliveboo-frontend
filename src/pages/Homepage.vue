@@ -93,13 +93,17 @@ export default {
 
     <!-- JUMBO -->
     <div class="jumbo">
-        <div v-if="paymentSuccess" class="alert alert-success message-payment text-center w-50 mx-auto">
-            Pagamento avvenuto con successo!
-            <button class="btn" @click="clearMessage">X</button>
+        <div v-if="paymentSuccess" class="alert alert-success message-payment text-center w-50 mx-auto d-flex">
+            
+            <div class="message px-3 py-3 ms-3 col">
+                Pagamento avvenuto con successo! <br>
+            Un nostro collaboratore sta procedendo a preparare il tuo Ordine!
+            </div>
+            <div class="text-right"><button class="btn" @click="clearMessage"><i class="fa-solid fa-x"></i></button></div>
         </div>
 
         <section class="background-header">
-            <img src="/src/assets/img/jumbotron.png" alt="">
+            <img src="/src/assets/img/jumbotron.png" alt="jumbotron" class="w-100">
         </section>
     </div>
     <!--end jumbo-->
@@ -126,7 +130,7 @@ export default {
         </div>
     </div>
 
-    <section class="cards p-2">
+    <section class="cards pb-5">
         <div class="row px-4 restaurants" style="max-height: 1000px; overflow-x: hidden; overflow-y: auto;"> 
             <div v-if="filteredRestaurants.length != 0" class="col-lg-3 col-md-6 g-3" v-for="restaurant in filteredRestaurants">
                 <router-link class="btn btn-primary card my-card p-0 border-0 h-100" :to="{ name: 'restaurants.show', params: { id: restaurant.id } }">

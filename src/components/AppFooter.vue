@@ -17,7 +17,7 @@ export default {
         <div class="row text-center text-md-left">
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold">
-                    Scopri Deliveboo
+                    Scopri Eatoon
                 </h5>
                 <p>
                     <a href="#"class="prova">Investitori</a>
@@ -86,7 +86,7 @@ export default {
 
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold">
-                    Porta Deliveroo con te
+                    Porta Eatoon con te
                 </h5>
                 <button class="btn btn-primary btn-footer">
                     <div class="logo-footer-container">
