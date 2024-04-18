@@ -21,7 +21,7 @@ export default {
             </a>
             
             <span class="text-secondary me-3">
-                Sei un Ristoratore?
+                <span class="d-none d-md-inline me-2">Sei un Ristoratore?</span>
                 <a href="http://127.0.0.1:8000/admin/dashboard" class="login-button">Login</a>
             </span>
             

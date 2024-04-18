@@ -5,6 +5,7 @@
 h1{
     color: $primary;
 }
+
 .checkout-page{
     background-color: $tertiary;
     padding: 50px;
@@ -35,6 +36,9 @@ h1{
     color: $secondary;
     border-radius: 20px;
     width: 100%;
+    h3 {
+        color: $secondary;
+    }
 }
 .btn-checkout{
     width: 40px;
