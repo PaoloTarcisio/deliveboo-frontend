@@ -232,24 +232,21 @@ export default {
             .my-card
             {
                 color: $secondary;
-                border-radius: 10px;
+                border-radius: 20px;
                 background-color: $primary;
                 
-                a
+                img
                 {
-                    text-decoration: none;
-                    color: $secondary;
+                    border-top-left-radius: 20px;
+                    border-top-right-radius: 20px;
+                }
+            }
 
-                    p
-                    {
-                        margin-bottom: 0;
-                    }
-                }
-                
-                a:hover
-                {
-                    color: $secondary;
-                }
+            .my-card:hover
+            {
+                scale: 1.015;
+                box-shadow: 3px 3px 15px black;
+                transition: 0.3s;
             }
         }
     }

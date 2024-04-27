@@ -168,7 +168,7 @@ export default {
                 <div class="card-plate-row">
                     <div class="card-plate my-3 px-5 py-3"  v-for="plate in restaurant.plates">
 
-                        <div class="row p-0">
+                        <div class="row p-0 align-items-center">
 
                             <div class="col-lg-3 col-md-12 col-sm-12 order-sm-first">
                                 <div class="img-card-plate">
@@ -280,14 +280,6 @@ export default {
                 }
                 .restourant-image
                 {
-                    /*img
-                    {
-                        width: 100%;
-                        border-top-left-radius: 20px;
-                        border-bottom-left-radius: 20px;
-
-                    }*/
-                
 
                 img {
                     width: 100%;
@@ -457,6 +449,13 @@ export default {
                         border-radius: 2rem;
                     }
                 }
+            }
+
+            .card-plate:hover
+            {
+                scale: 1.015;
+                box-shadow: 3px 3px 15px black;
+                transition: 0.3s;
             }
         }
     }
