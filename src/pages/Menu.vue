@@ -370,12 +370,7 @@ export default {
                     width: 60%;
                     margin: 0 auto;
                     text-align: start;
-
-
-                    .card-plate-name-price
-                    {
-                        //padding-left: 3.3rem;
-                    }
+                    
                     .card-plate-description-ingredients
                     {
                         font-size: 1.1rem;
