@@ -4,27 +4,6 @@ h1{
     color: $secondary;
 }
 
-
-// SECTION HERO
-
-/*
-.background-header{
-    background: url('/src/assets/img/jumbotron.png');
-    width: 100%;
-    background-color: $tertiary;
-}
-
-.background-header::before {
-    background-color: rgba(0, 0, 0, 0.6);
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-*/
-
 .background-header .container {
     height: 100vh;
     z-index: 1;
@@ -38,51 +17,6 @@ h1{
     font-size: 1.2em;
     color: $secondary;
 }
-//STILE SEZIONE MAPS//
-/*
-h6{
-    text-transform: uppercase;
-}
-.section-map{
-    display: flex;
-    align-items: center;
-    min-height: 100vh;
-    padding: 4em 0;  
-    background-color: $secondary; 
-}
-.container-section-map{
-    height: 800px;
-}
-.map-wrapper{
-    height: 500px;
-}
-.map-wrapper iframe {
-    width: 100%;
-    height: 100%;
-    filter: invert(1) grayscale(100%);
-}
-.main-content{
-    z-index: 22;
-    width: fit-content;
-    color: $primary;
-}
-@media (max-width:600px) {
-    .map-wrapper iframe {
-        min-height: 140vh;
-    }
-
-}
-.download-map-menu > .btn {
-    background-color: $primary;
-    color: $secondary;
-    font-weight: bold;
-}
-.download-map-menu > .btn:hover{
-    background-color: $secondary;
-    color: $primary;
-    border-color: $primary;
-}
-*/
 
 //CATEGORIE
 
